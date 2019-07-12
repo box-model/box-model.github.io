@@ -1,0 +1,22 @@
+
+@font-face {
+  font-family: clockFont;
+  src: url(../alarm_clock.ttf);
+}
+
+.stats-control{
+  height: 50px;
+}
+
+.stats-item{
+  font-display: block;
+  font-family: clockFont ,monospace;
+  float:left;
+  width: 100px !important;
+  height: 50px !important;
+  border: 1px solid black; 
+  background: #D3E2E3;
+  margin: 0 1px;
+  font-size: 2em;
+  font-weight: bolder;
+}

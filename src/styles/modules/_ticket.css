@@ -1,0 +1,35 @@
+.ticket {
+  background-image: url('../ticket.png');
+  background-size: 100px 50px;
+  -webkit-transform: translate3d(0, 0, 0);
+  width: 100px !important;
+  height: 50px !important;
+  padding: 12px 20px;
+  color: #320a01;
+  font-weight: bolder;
+  margin: 3px;
+  z-index: 10;
+  overflow: hidden;
+}
+
+.ticket button {
+  display: none;
+  position: relative;
+  right: -18px;
+  top: -18px;
+  /* border: 1px black solid; */
+}
+
+.ticket:hover button {
+  display: block;
+}
+
+.ticket-inline {
+  position: absolute;
+  left: 7.5px;
+  top: 5px;
+  width: 85px;
+  height: 40px;
+  border: 2px solid #e1530c;
+  border-radius: 5px;
+}

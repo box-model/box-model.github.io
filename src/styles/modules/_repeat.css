@@ -1,0 +1,39 @@
+.repeat {
+  height: 100%;
+  overflow: visible;
+}
+
+.btn-repeat {
+  width: 17.5%;
+  height: 32%;
+  /* position: absolute; */
+  float: left;
+  border-top-right-radius: 0 !important;
+  border-bottom-right-radius: 0 !important;
+  border-top-left-radius: 5px !important;
+  border-bottom-left-radius: 5px !important;
+}
+
+.repeat-panel {
+  height: 41%;
+  width: 100%;
+  position: absolute;
+  top: 20%;
+}
+
+.repeat-input {
+  padding-left: 10px;
+  padding-top: 50%;
+  display: block;
+  width: 75%;
+  height: 100%;
+  position: absolute;
+  left: 18%;
+  top: 0;
+  /* float: right; */
+}
+
+.repeat-input-box,
+.repeat-input-box:focus {
+  background: #fffbcc;
+}

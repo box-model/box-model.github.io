@@ -1,0 +1,33 @@
+.btn-large{
+  width: 130px;
+  height: 40px;
+}
+.btn-wide{
+  width: 100%
+}
+
+.btn-stretch{
+  height: 100%;
+  display: block;
+}
+
+
+/* .btn-large:disabled{
+  
+}
+
+.btn-large:hover {
+  /* background-color: #2EE59D; 
+  box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
+  color: #333;
+  transform: translateY(-7px);
+*/.arrow-down{
+  position: relative;
+  top: 50%;
+  left: 8%;
+}
+
+
+.select-border{
+  border-color: black;
+}

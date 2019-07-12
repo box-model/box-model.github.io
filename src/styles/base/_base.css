@@ -1,0 +1,111 @@
+container-fluid {
+  -webkit-transform: translate3d(0, 0, 0);
+}
+
+.underline {
+  border-radius: 0;
+  border: 0;
+  border-bottom: 1px solid black;
+  padding: 0;
+  /* padding-left: .2rem; */
+  width: 50px;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+
+.background-tag {
+  position: absolute;
+  font: bolder;
+  font-size: 4em;
+  color: rgba(0, 0, 0, 0.05);
+  left: 50%;
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%) translateY(50%);
+}
+
+.highlighter {
+  top: 20%;
+  left: -1%;
+  position: absolute;
+  background: #fffbcc;
+  width: 62.5%;
+  height: 41%;
+  z-index: 0;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.big-font {
+  font-size: 2.4em;
+}
+
+.theme {
+  background: #fcfcfc;
+}
+
+.fade-hidden {
+  opacity: 0;
+  transition: opacity 5s linear;
+}
+
+.fade-show {
+  opacity: 1;
+  animation-name: fadeInOpacity;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 1s;
+}
+
+.slide-hidden {
+  left: 77.5%;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -ms-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.slide-hidden > .repeat-input {
+  display: none;
+}
+
+.slide-show > .repeat-input {
+  background: #fffbcc;
+  width: 80%;
+}
+
+.slide-show {
+  left: 0;
+  -webkit-transition: all 0.3s ease-out;
+  -moz-transition: all 0.3s ease-out;
+  -ms-transition: all 0.3s ease-out;
+  -o-transition: all 0.3s ease-out;
+  transition: all 0.3s ease-out;
+}
+
+.stretch {
+  width: 100%;
+  display: block;
+}
+
+@keyframes fadeInOpacity {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.hidden {
+  visibility: hidden;
+}
+
+.highlight {
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.overflow-check {
+  overflow: hidden;
+}

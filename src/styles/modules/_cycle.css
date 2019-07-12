@@ -1,0 +1,31 @@
+.cycle{
+  border : 3px solid #333;
+  border-right: 0;
+  border-radius: 2px;
+}
+
+#mask-top {
+  position: absolute;
+  display: block;
+  top:-3px;
+  right:1px;
+  width:80%;
+  height: 3px;
+  background-color:#fff;
+}
+#mask-bottom {
+  position: absolute;
+  display: block;
+  bottom:-3px;
+  right:1px;
+  width:80%;
+  height: 3px;
+  background-color:#fff;
+}
+.border-top{
+  /* border-top: 2px solid #666 !important; */
+}
+
+.border-bottom{
+  /* border-bottom: 2px solid #666 !important; */
+}

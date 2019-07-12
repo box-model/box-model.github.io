@@ -1,0 +1,16 @@
+.histogram{
+  position: absolute;
+  bottom: 0;
+  z-index: 0;
+  left: 20%;
+}
+
+.chart{
+  position: absolute;
+  top: 30%;
+  right: -50%;
+}
+
+.chart-item{
+  width: 45px !important; 
+}
