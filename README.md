@@ -1,21 +1,27 @@
 ## Box Model
 
 The main js file is in the src folder (index.js)
-The final version is on dist folder
+all of code is located to src folder.
 
-### commands to run
 
-Download required dependecies
+###  Quick start for local development
+
+1 . Download required dependecies 
 ```
  npm install  
 ```
-Run a virtual server on port 8080
+2. Run a local server on port 8080
 ```
  npm run start:dev
 ```
-this will build the final file on dist folder
+
+note: npm is a package manager it came with NodeJS installation
+
+### Build Release
+
+this will build the final index file and its dependencies,
+ you can set the destionation folder on `webpack.config.js`.
+
 ```
  npm run build
 ```
-
-note: npm is a package manager it came with NodeJS installation
