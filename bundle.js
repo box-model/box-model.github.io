@@ -3228,25 +3228,6 @@ var App = function (_Component) {
             { className: 'display-4 text-center my-0' },
             'The Box Model Simulator'
           ),
-          _react2.default.createElement(
-            'p',
-            { className: 'lead text-center' },
-            'By',
-            ' ',
-            _react2.default.createElement(
-              'a',
-              { href: 'https://bentzkast.github.io/', target: '_blank' },
-              'Joseph Alfredo'
-            ),
-            ' ',
-            '&',
-            ' ',
-            _react2.default.createElement(
-              'a',
-              { href: 'http://www.calpoly.edu/~dsun09', target: '_blank' },
-              'Dennis L. Sun'
-            )
-          ),
           _react2.default.createElement(_Bar2.default, { step: this.state.step }),
           _react2.default.createElement(
             'div',
@@ -38630,7 +38611,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "container-fluid {\r\n  -webkit-transform: translate3d(0, 0, 0);\r\n}\r\n\r\n.underline {\r\n  border-radius: 0;\r\n  border: 0;\r\n  border-bottom: 1px solid black;\r\n  padding: 0;\r\n  /* padding-left: .2rem; */\r\n  width: 50px;\r\n  margin-left: 2px;\r\n  margin-right: 2px;\r\n}\r\n\r\n.background-tag {\r\n  position: absolute;\r\n  font: bolder;\r\n  font-size: 4em;\r\n  color: rgba(0, 0, 0, 0.05);\r\n  left: 50%;\r\n  -webkit-transform: translateX(-50%);\r\n  transform: translateX(-50%) translateY(50%);\r\n}\r\n\r\n.highlighter {\r\n  top: 20%;\r\n  left: -1%;\r\n  position: absolute;\r\n  background: #fffbcc;\r\n  width: 62.5%;\r\n  height: 41%;\r\n  z-index: 0;\r\n  border-top-right-radius: 5px;\r\n  border-bottom-right-radius: 5px;\r\n}\r\n\r\n.big-font {\r\n  font-size: 2.4em;\r\n}\r\n\r\n.theme {\r\n  background: #fcfcfc;\r\n}\r\n\r\n.fade-hidden {\r\n  opacity: 0;\r\n  transition: opacity 5s linear;\r\n}\r\n\r\n.fade-show {\r\n  opacity: 1;\r\n  animation-name: fadeInOpacity;\r\n  animation-iteration-count: 1;\r\n  animation-timing-function: ease-in;\r\n  animation-duration: 1s;\r\n}\r\n\r\n.slide-hidden {\r\n  left: 77.5%;\r\n  -webkit-transition: all 0.3s ease-out;\r\n  -moz-transition: all 0.3s ease-out;\r\n  -ms-transition: all 0.3s ease-out;\r\n  -o-transition: all 0.3s ease-out;\r\n  transition: all 0.3s ease-out;\r\n}\r\n\r\n.slide-hidden > .repeat-input {\r\n  display: none;\r\n}\r\n\r\n.slide-show > .repeat-input {\r\n  background: #fffbcc;\r\n  width: 80%;\r\n}\r\n\r\n.slide-show {\r\n  left: 0;\r\n  -webkit-transition: all 0.3s ease-out;\r\n  -moz-transition: all 0.3s ease-out;\r\n  -ms-transition: all 0.3s ease-out;\r\n  -o-transition: all 0.3s ease-out;\r\n  transition: all 0.3s ease-out;\r\n}\r\n\r\n.stretch {\r\n  width: 100%;\r\n  display: block;\r\n}\r\n\r\n@keyframes fadeInOpacity {\r\n  0% {\r\n    opacity: 0;\r\n  }\r\n  100% {\r\n    opacity: 1;\r\n  }\r\n}\r\n\r\n.hidden {\r\n  visibility: hidden;\r\n}\r\n\r\n.highlight {\r\n  font-size: 1.25rem;\r\n  font-weight: bold;\r\n}\r\n\r\n.overflow-check {\r\n  overflow: hidden;\r\n}\r\n", ""]);
+exports.push([module.i, "container-fluid {\n  -webkit-transform: translate3d(0, 0, 0);\n}\n\n.underline {\n  border-radius: 0;\n  border: 0;\n  border-bottom: 1px solid black;\n  padding: 0;\n  /* padding-left: .2rem; */\n  width: 50px;\n  margin-left: 2px;\n  margin-right: 2px;\n}\n\n.background-tag {\n  position: absolute;\n  font: bolder;\n  font-size: 4em;\n  color: rgba(0, 0, 0, 0.05);\n  left: 50%;\n  -webkit-transform: translateX(-50%);\n  transform: translateX(-50%) translateY(50%);\n}\n\n.highlighter {\n  top: 20%;\n  left: -1%;\n  position: absolute;\n  background: #fffbcc;\n  width: 62.5%;\n  height: 41%;\n  z-index: 0;\n  border-top-right-radius: 5px;\n  border-bottom-right-radius: 5px;\n}\n\n.big-font {\n  font-size: 2.4em;\n}\n\n.theme {\n  background: #fcfcfc;\n}\n\n.fade-hidden {\n  opacity: 0;\n  transition: opacity 5s linear;\n}\n\n.fade-show {\n  opacity: 1;\n  animation-name: fadeInOpacity;\n  animation-iteration-count: 1;\n  animation-timing-function: ease-in;\n  animation-duration: 1s;\n}\n\n.slide-hidden {\n  left: 77.5%;\n  -webkit-transition: all 0.3s ease-out;\n  -moz-transition: all 0.3s ease-out;\n  -ms-transition: all 0.3s ease-out;\n  -o-transition: all 0.3s ease-out;\n  transition: all 0.3s ease-out;\n}\n\n.slide-hidden > .repeat-input {\n  display: none;\n}\n\n.slide-show > .repeat-input {\n  background: #fffbcc;\n  width: 80%;\n}\n\n.slide-show {\n  left: 0;\n  -webkit-transition: all 0.3s ease-out;\n  -moz-transition: all 0.3s ease-out;\n  -ms-transition: all 0.3s ease-out;\n  -o-transition: all 0.3s ease-out;\n  transition: all 0.3s ease-out;\n}\n\n.stretch {\n  width: 100%;\n  display: block;\n}\n\n@keyframes fadeInOpacity {\n  0% {\n    opacity: 0;\n  }\n  100% {\n    opacity: 1;\n  }\n}\n\n.hidden {\n  visibility: hidden;\n}\n\n.highlight {\n  font-size: 1.25rem;\n  font-weight: bold;\n}\n\n.overflow-check {\n  overflow: hidden;\n}\n", ""]);
 
 // exports
 
@@ -38644,7 +38625,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, ".box {\r\n  -webkit-transform: translate3d(0, 0, 0);\r\n  border: 2px solid #333;\r\n  height: 200px;\r\n  overflow-y: visible;\r\n  background: white !important;\r\n}\r\n\r\n.box-statistic {\r\n  overflow: auto;\r\n}\r\n\r\n.wrapper-visible {\r\n  overflow-x: scroll;\r\n}\r\n\r\n.wrapper-hidden {\r\n  overflow-x: visible;\r\n}\r\n\r\n.content {\r\n  -webkit-transform: translate3d(0, 0, 0);\r\n  visibility: hidden;\r\n  margin-top: -400px;\r\n  overflow-x: scroll;\r\n  overflow-y: hidden;\r\n  width: 100%;\r\n  height: 600px;\r\n}\r\n\r\n.wrapper {\r\n  -webkit-transform: translate3d(0, 0, 0);\r\n  visibility: visible;\r\n  margin-top: 400px;\r\n  width: 5000px;\r\n  height: 200px;\r\n  z-index: 0;\r\n}\r\n\r\n*input {\r\n  z-index: 15;\r\n}\r\n\r\n.input-box,\r\n.input-box:focus,\r\n.input-box:active {\r\n  box-sizing: border-box;\r\n  position: absolute;\r\n  left: 10px;\r\n  top: 10px;\r\n  width: 80px !important;\r\n  height: 30px;\r\n  background-color: #f99d1e;\r\n  border: 0;\r\n  color: #320a01;\r\n  font-weight: bolder;\r\n  box-shadow: none;\r\n  z-index: 50;\r\n  border-radius: 0;\r\n}\r\n\r\n.add-ticket-form {\r\n  margin-left: 50px;\r\n}\r\n\r\n.box-form {\r\n  left: 100;\r\n  position: absolute;\r\n  width: 250px;\r\n  overflow: visible;\r\n  z-index: 25;\r\n}\r\n.box-control-menu {\r\n  width: 50px;\r\n  margin-left: -5px;\r\n}\r\n\r\n.box-control-menu > button,\r\n.box-control-menu > * > button {\r\n  border-top-left-radius: 0;\r\n  border-bottom-left-radius: 0;\r\n  height: 62px;\r\n  width: 30px;\r\n  margin: 1px;\r\n  padding: 0;\r\n}\r\n\r\n.edit-form {\r\n  width: 100%;\r\n  overflow: scroll;\r\n  resize: none;\r\n}\r\n\r\n.input-highlighter-color,\r\n.input-highlighter-color:focus,\r\n.input-highlighter-color:disabled {\r\n  background: #28a74500;\r\n}\r\n", ""]);
+exports.push([module.i, ".box {\n  -webkit-transform: translate3d(0, 0, 0);\n  border: 2px solid #333;\n  height: 200px;\n  overflow-y: visible;\n  background: white !important;\n}\n\n.box-statistic {\n  overflow: auto;\n}\n\n.wrapper-visible {\n  overflow-x: scroll;\n}\n\n.wrapper-hidden {\n  overflow-x: visible;\n}\n\n.content {\n  -webkit-transform: translate3d(0, 0, 0);\n  visibility: hidden;\n  margin-top: -400px;\n  overflow-x: scroll;\n  overflow-y: hidden;\n  width: 100%;\n  height: 600px;\n}\n\n.wrapper {\n  -webkit-transform: translate3d(0, 0, 0);\n  visibility: visible;\n  margin-top: 400px;\n  width: 5000px;\n  height: 200px;\n  z-index: 0;\n}\n\n*input {\n  z-index: 15;\n}\n\n.input-box,\n.input-box:focus,\n.input-box:active {\n  box-sizing: border-box;\n  position: absolute;\n  left: 10px;\n  top: 10px;\n  width: 80px !important;\n  height: 30px;\n  background-color: #f99d1e;\n  border: 0;\n  color: #320a01;\n  font-weight: bolder;\n  box-shadow: none;\n  z-index: 50;\n  border-radius: 0;\n}\n\n.add-ticket-form {\n  margin-left: 50px;\n}\n\n.box-form {\n  left: 100;\n  position: absolute;\n  width: 250px;\n  overflow: visible;\n  z-index: 25;\n}\n.box-control-menu {\n  width: 50px;\n  margin-left: -5px;\n}\n\n.box-control-menu > button,\n.box-control-menu > * > button {\n  border-top-left-radius: 0;\n  border-bottom-left-radius: 0;\n  height: 62px;\n  width: 30px;\n  margin: 1px;\n  padding: 0;\n}\n\n.edit-form {\n  width: 100%;\n  overflow: scroll;\n  resize: none;\n}\n\n.input-highlighter-color,\n.input-highlighter-color:focus,\n.input-highlighter-color:disabled {\n  background: #28a74500;\n}\n", ""]);
 
 // exports
 
@@ -38659,7 +38640,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, ".ticket {\r\n  background-image: url(" + escape(__webpack_require__(74)) + ");\r\n  background-size: 100px 50px;\r\n  -webkit-transform: translate3d(0, 0, 0);\r\n  width: 100px !important;\r\n  height: 50px !important;\r\n  padding: 12px 20px;\r\n  color: #320a01;\r\n  font-weight: bolder;\r\n  margin: 3px;\r\n  z-index: 10;\r\n  overflow: hidden;\r\n}\r\n\r\n.ticket button {\r\n  display: none;\r\n  position: relative;\r\n  right: -18px;\r\n  top: -18px;\r\n  /* border: 1px black solid; */\r\n}\r\n\r\n.ticket:hover button {\r\n  display: block;\r\n}\r\n\r\n.ticket-inline {\r\n  position: absolute;\r\n  left: 7.5px;\r\n  top: 5px;\r\n  width: 85px;\r\n  height: 40px;\r\n  border: 2px solid #e1530c;\r\n  border-radius: 5px;\r\n}\r\n", ""]);
+exports.push([module.i, ".ticket {\n  background-image: url(" + escape(__webpack_require__(74)) + ");\n  background-size: 100px 50px;\n  -webkit-transform: translate3d(0, 0, 0);\n  width: 100px !important;\n  height: 50px !important;\n  padding: 12px 20px;\n  color: #320a01;\n  font-weight: bolder;\n  margin: 3px;\n  z-index: 10;\n  overflow: hidden;\n}\n\n.ticket button {\n  display: none;\n  position: relative;\n  right: -18px;\n  top: -18px;\n  /* border: 1px black solid; */\n}\n\n.ticket:hover button {\n  display: block;\n}\n\n.ticket-inline {\n  position: absolute;\n  left: 7.5px;\n  top: 5px;\n  width: 85px;\n  height: 40px;\n  border: 2px solid #e1530c;\n  border-radius: 5px;\n}\n", ""]);
 
 // exports
 
@@ -38679,7 +38660,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, ".repeat {\r\n  height: 100%;\r\n  overflow: visible;\r\n}\r\n\r\n.btn-repeat {\r\n  width: 17.5%;\r\n  height: 32%;\r\n  /* position: absolute; */\r\n  float: left;\r\n  border-top-right-radius: 0 !important;\r\n  border-bottom-right-radius: 0 !important;\r\n  border-top-left-radius: 5px !important;\r\n  border-bottom-left-radius: 5px !important;\r\n}\r\n\r\n.repeat-panel {\r\n  height: 41%;\r\n  width: 100%;\r\n  position: absolute;\r\n  top: 20%;\r\n}\r\n\r\n.repeat-input {\r\n  padding-left: 10px;\r\n  padding-top: 50%;\r\n  display: block;\r\n  width: 75%;\r\n  height: 100%;\r\n  position: absolute;\r\n  left: 18%;\r\n  top: 0;\r\n  /* float: right; */\r\n}\r\n\r\n.repeat-input-box,\r\n.repeat-input-box:focus {\r\n  background: #fffbcc;\r\n}\r\n", ""]);
+exports.push([module.i, ".repeat {\n  height: 100%;\n  overflow: visible;\n}\n\n.btn-repeat {\n  width: 17.5%;\n  height: 32%;\n  /* position: absolute; */\n  float: left;\n  border-top-right-radius: 0 !important;\n  border-bottom-right-radius: 0 !important;\n  border-top-left-radius: 5px !important;\n  border-bottom-left-radius: 5px !important;\n}\n\n.repeat-panel {\n  height: 41%;\n  width: 100%;\n  position: absolute;\n  top: 20%;\n}\n\n.repeat-input {\n  padding-left: 10px;\n  padding-top: 50%;\n  display: block;\n  width: 75%;\n  height: 100%;\n  position: absolute;\n  left: 18%;\n  top: 0;\n  /* float: right; */\n}\n\n.repeat-input-box,\n.repeat-input-box:focus {\n  background: #fffbcc;\n}\n", ""]);
 
 // exports
 
@@ -38694,7 +38675,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, "\r\n@font-face {\r\n  font-family: clockFont;\r\n  src: url(" + escape(__webpack_require__(77)) + ");\r\n}\r\n\r\n.stats-control{\r\n  height: 50px;\r\n}\r\n\r\n.stats-item{\r\n  font-display: block;\r\n  font-family: clockFont ,monospace;\r\n  float:left;\r\n  width: 100px !important;\r\n  height: 50px !important;\r\n  border: 1px solid black; \r\n  background: #D3E2E3;\r\n  margin: 0 1px;\r\n  font-size: 2em;\r\n  font-weight: bolder;\r\n}\r\n", ""]);
+exports.push([module.i, "\n@font-face {\n  font-family: clockFont;\n  src: url(" + escape(__webpack_require__(77)) + ");\n}\n\n.stats-control{\n  height: 50px;\n}\n\n.stats-item{\n  font-display: block;\n  font-family: clockFont ,monospace;\n  float:left;\n  width: 100px !important;\n  height: 50px !important;\n  border: 1px solid black; \n  background: #D3E2E3;\n  margin: 0 1px;\n  font-size: 2em;\n  font-weight: bolder;\n}\n", ""]);
 
 // exports
 
@@ -38714,7 +38695,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, ".btn-large{\r\n  width: 130px;\r\n  height: 40px;\r\n}\r\n.btn-wide{\r\n  width: 100%\r\n}\r\n\r\n.btn-stretch{\r\n  height: 100%;\r\n  display: block;\r\n}\r\n\r\n\r\n/* .btn-large:disabled{\r\n  \r\n}\r\n\r\n.btn-large:hover {\r\n  /* background-color: #2EE59D; \r\n  box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);\r\n  color: #333;\r\n  transform: translateY(-7px);\r\n*/.arrow-down{\r\n  position: relative;\r\n  top: 50%;\r\n  left: 8%;\r\n}\r\n\r\n\r\n.select-border{\r\n  border-color: black;\r\n}", ""]);
+exports.push([module.i, ".btn-large{\n  width: 130px;\n  height: 40px;\n}\n.btn-wide{\n  width: 100%\n}\n\n.btn-stretch{\n  height: 100%;\n  display: block;\n}\n\n\n/* .btn-large:disabled{\n  \n}\n\n.btn-large:hover {\n  /* background-color: #2EE59D; \n  box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);\n  color: #333;\n  transform: translateY(-7px);\n*/.arrow-down{\n  position: relative;\n  top: 50%;\n  left: 8%;\n}\n\n\n.select-border{\n  border-color: black;\n}", ""]);
 
 // exports
 
@@ -38728,7 +38709,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, ".histogram{\r\n  position: absolute;\r\n  bottom: 0;\r\n  z-index: 0;\r\n  left: 20%;\r\n}\r\n\r\n.chart{\r\n  position: absolute;\r\n  top: 30%;\r\n  right: -50%;\r\n}\r\n\r\n.chart-item{\r\n  width: 45px !important; \r\n}", ""]);
+exports.push([module.i, ".histogram{\n  position: absolute;\n  bottom: 0;\n  z-index: 0;\n  left: 20%;\n}\n\n.chart{\n  position: absolute;\n  top: 30%;\n  right: -50%;\n}\n\n.chart-item{\n  width: 45px !important; \n}", ""]);
 
 // exports
 
@@ -38742,7 +38723,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, ".cycle{\r\n  border : 3px solid #333;\r\n  border-right: 0;\r\n  border-radius: 2px;\r\n}\r\n\r\n#mask-top {\r\n  position: absolute;\r\n  display: block;\r\n  top:-3px;\r\n  right:1px;\r\n  width:80%;\r\n  height: 3px;\r\n  background-color:#fff;\r\n}\r\n#mask-bottom {\r\n  position: absolute;\r\n  display: block;\r\n  bottom:-3px;\r\n  right:1px;\r\n  width:80%;\r\n  height: 3px;\r\n  background-color:#fff;\r\n}\r\n.border-top{\r\n  /* border-top: 2px solid #666 !important; */\r\n}\r\n\r\n.border-bottom{\r\n  /* border-bottom: 2px solid #666 !important; */\r\n}", ""]);
+exports.push([module.i, ".cycle{\n  border : 3px solid #333;\n  border-right: 0;\n  border-radius: 2px;\n}\n\n#mask-top {\n  position: absolute;\n  display: block;\n  top:-3px;\n  right:1px;\n  width:80%;\n  height: 3px;\n  background-color:#fff;\n}\n#mask-bottom {\n  position: absolute;\n  display: block;\n  bottom:-3px;\n  right:1px;\n  width:80%;\n  height: 3px;\n  background-color:#fff;\n}\n.border-top{\n  /* border-top: 2px solid #666 !important; */\n}\n\n.border-bottom{\n  /* border-bottom: 2px solid #666 !important; */\n}", ""]);
 
 // exports
 
@@ -38756,7 +38737,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, ".flash-button {\r\n  background: blue;\r\n  padding: 5px 10px;\r\n  color: #fff;\r\n  border: none;\r\n  border-radius: 5px;\r\n\r\n  animation-name: flash;\r\n  animation-duration: 1s;\r\n  animation-timing-function: linear;\r\n  animation-iteration-count: infinite;\r\n}\r\n\r\n@keyframes flash {\r\n  0% {\r\n    opacity: 1;\r\n  }\r\n  50% {\r\n    opacity: 0.5;\r\n  }\r\n  100% {\r\n    opacity: 1;\r\n  }\r\n}\r\n", ""]);
+exports.push([module.i, ".flash-button {\n  background: blue;\n  padding: 5px 10px;\n  color: #fff;\n  border: none;\n  border-radius: 5px;\n\n  animation-name: flash;\n  animation-duration: 1s;\n  animation-timing-function: linear;\n  animation-iteration-count: infinite;\n}\n\n@keyframes flash {\n  0% {\n    opacity: 1;\n  }\n  50% {\n    opacity: 0.5;\n  }\n  100% {\n    opacity: 1;\n  }\n}\n", ""]);
 
 // exports
 
@@ -38770,7 +38751,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, ".my-alert{\r\n  position: fixed !important;\r\n  left: 33%;\r\n  width: 500px;\r\n  top: 25%;\r\n  z-index: 99;\r\n}", ""]);
+exports.push([module.i, ".my-alert{\n  position: fixed !important;\n  left: 33%;\n  width: 500px;\n  top: 25%;\n  z-index: 99;\n}", ""]);
 
 // exports
 
