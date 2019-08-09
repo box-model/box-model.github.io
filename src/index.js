@@ -132,6 +132,7 @@ class App extends Component {
               Dennis L. Sun
             </a>
           </p> */}
+
           <Bar step={this.state.step} />
           <div className="row no-gutters">
             <div className="col-2">
@@ -327,6 +328,19 @@ class App extends Component {
               />
             </div>
           </div>
+          <button
+            type="button"
+            className={`btn btn-danger sticky`}
+            onClick={() => {
+                if (window.confirm("Do you really want to Start over?")) {
+                  window.location.reload();
+                }
+              }
+            }
+            disabled={false}
+          >
+            Start Over
+        </button>
         </div>
       </div>
     );
