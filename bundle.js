@@ -39124,7 +39124,7 @@ var _module = function () {
             for (var _i = 0; _i < this.state.amount; _i++) {
               var _sampleIndex = Math.floor(Math.random() * sampled.length);
               sample.push(sampled[_sampleIndex]);
-              sampled.splice(sampled, 1);
+              sampled.splice(_sampleIndex, 1);
             }
           }
         // quick agree

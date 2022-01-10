@@ -95,7 +95,7 @@ const module = (function() {
           for (let i = 0; i < this.state.amount; i++) {
             const sampleIndex = Math.floor(Math.random() * sampled.length);
             sample.push(sampled[sampleIndex]);
-            sampled.splice(sampled, 1);
+            sampled.splice(sampleIndex, 1);
           }
         }
         // quick agree
