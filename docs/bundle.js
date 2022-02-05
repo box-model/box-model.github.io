@@ -3393,7 +3393,7 @@ var App = function (_Component) {
               type: 'button',
               className: 'btn btn-danger sticky',
               onClick: function onClick() {
-                if (window.confirm("Do you really want to Start over?")) {
+                if (window.confirm("Do you really want to start over?")) {
                   window.location.reload();
                 }
               },
@@ -38709,7 +38709,7 @@ exports = module.exports = __webpack_require__(3)(false);
 
 
 // module
-exports.push([module.i, ".btn-large{\n  width: 130px;\n  height: 40px;\n}\n.btn-wide{\n  width: 100%\n}\n\n.btn-stretch{\n  height: 100%;\n  display: block;\n}\n\n\n/* .btn-large:disabled{\n  \n}\n\n.btn-large:hover {\n  /* background-color: #2EE59D; \n  box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);\n  color: #333;\n  transform: translateY(-7px);\n*/.arrow-down{\n  position: relative;\n  top: 50%;\n  left: 8%;\n}\n\n\n.select-border{\n  border-color: black;\n}\n\n.sticky{\n  position: -webkit-sticky; /* Safari */\n  position: sticky;\n  bottom: 5%;\n  left: 45%;\n}", ""]);
+exports.push([module.i, ".btn-large{\n  width: 130px;\n  height: 40px;\n}\n.btn-wide{\n  width: 100%\n}\n\n.btn-stretch{\n  height: 100%;\n  display: block;\n}\n\n\n/* .btn-large:disabled{\n  \n}\n\n.btn-large:hover {\n  /* background-color: #2EE59D; \n  box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);\n  color: #333;\n  transform: translateY(-7px);\n*/.arrow-down{\n  position: relative;\n  top: 50%;\n  left: 8%;\n}\n\n\n.select-border{\n  border-color: black;\n}\n\n.sticky{\n  position: -webkit-sticky; /* Safari */\n  position: sticky;\n  bottom: 5%;\n  left: 85%;\n}\n", ""]);
 
 // exports
 

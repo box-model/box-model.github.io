@@ -332,7 +332,7 @@ class App extends Component {
             type="button"
             className={`btn btn-danger sticky`}
             onClick={() => {
-                if (window.confirm("Do you really want to Start over?")) {
+                if (window.confirm("Do you really want to start over?")) {
                   window.location.reload();
                 }
               }
