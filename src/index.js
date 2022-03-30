@@ -122,7 +122,7 @@ class App extends Component {
           <h1 className="display-4 text-center my-0">
             The Box Model Simulator
           </h1>
-          {/* <p className="lead text-center">
+          <p className="lead text-center">
             By{' '}
             <a href="https://bentzkast.github.io/" target="_blank">
               Joseph Alfredo
@@ -131,7 +131,7 @@ class App extends Component {
             <a href="http://www.calpoly.edu/~dsun09" target="_blank">
               Dennis L. Sun
             </a>
-          </p> */}
+          </p>
 
           <Bar step={this.state.step} />
           <div className="row no-gutters">

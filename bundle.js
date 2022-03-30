@@ -3228,6 +3228,25 @@ var App = function (_Component) {
             { className: 'display-4 text-center my-0' },
             'The Box Model Simulator'
           ),
+          _react2.default.createElement(
+            'p',
+            { className: 'lead text-center' },
+            'By',
+            ' ',
+            _react2.default.createElement(
+              'a',
+              { href: 'https://bentzkast.github.io/', target: '_blank' },
+              'Joseph Alfredo'
+            ),
+            ' ',
+            '&',
+            ' ',
+            _react2.default.createElement(
+              'a',
+              { href: 'http://www.calpoly.edu/~dsun09', target: '_blank' },
+              'Dennis L. Sun'
+            )
+          ),
           _react2.default.createElement(_Bar2.default, { step: this.state.step }),
           _react2.default.createElement(
             'div',
