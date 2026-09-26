@@ -1,6 +1,4 @@
-import React, { Component } from 'react';
-import { CSSTransition, transit } from 'react-css-transition';
-CSSTransition.childContextTypes = {};
+import React from 'react';
 
 export default function Sample(props) {
   const left = 10 + Math.floor(props.shift / 3) * 110;

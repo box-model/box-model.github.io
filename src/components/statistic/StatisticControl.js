@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import {APPLICATION_STEP, AGGREGATION_MODE} from '../../utils/Constants';
 
 function StatsControl(props) {

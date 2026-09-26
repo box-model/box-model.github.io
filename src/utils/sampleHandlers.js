@@ -79,11 +79,7 @@ const module = (function() {
                         prevState.sampled[sampleIndex]
                       );
 
-                      if (option === "") {
-                        newState.sampled = prevState.sampled.map(
-                          (ticket, i) => (i !== sampleIndex ? ticket : "x")
-                        );
-                      } else if (option === MODE.WITHOUT) {
+                      if (option === MODE.WITHOUT) {
                         newState.sampled = prevState.sampled.filter(
                           (ticket, i) => i !== sampleIndex
                         );

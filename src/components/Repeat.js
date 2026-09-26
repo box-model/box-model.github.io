@@ -24,8 +24,7 @@ export default class Repeat extends Component {
       ((Math.log10(this.props.amount) + 1) / this.props.amount);
 
     this.props.setAnimationTime(timePerDraw);
-    this.props.handleRepeat(false, times);
-    // }
+    this.props.handleRepeat(times);
   }
 
   render() {

@@ -3,9 +3,6 @@ const module = (function() {
     OnAmountChange: function(event) {
       this.setState({ amount: event.target.value });
     },
-    onQuickChange: function(event) {
-      this.setState({ quickMode: event.target.checked });
-    },
     OnModeChange: function(event) {
       this.setState({ mode: event.target.value });
     },

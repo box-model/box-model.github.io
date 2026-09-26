@@ -1,7 +1,3 @@
-container-fluid {
-  -webkit-transform: translate3d(0, 0, 0);
-}
-
 .underline {
   border-radius: 0;
   border: 0;
@@ -33,14 +29,6 @@ container-fluid {
   z-index: 0;
   border-top-right-radius: 5px;
   border-bottom-right-radius: 5px;
-}
-
-.big-font {
-  font-size: 2.4em;
-}
-
-.theme {
-  background: #fcfcfc;
 }
 
 .fade-hidden {

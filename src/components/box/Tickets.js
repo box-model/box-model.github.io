@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import Ticket from "./Ticket";
-import BoxControl from "./BoxControl";
 
 export default class Tickets extends Component {
   constructor(props) {

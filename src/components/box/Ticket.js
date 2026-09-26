@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 function Ticket(props) {
   const sampleStyle = {
@@ -8,7 +8,7 @@ function Ticket(props) {
   };
   return (
     <div
-      className={`ticket ${props.value === 'x' ? 'hidden' : ''}`}
+      className="ticket"
       style={sampleStyle}
       role="alert"
     >

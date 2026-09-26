@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import SampleControl from './SampleControl';
 import Sample from './Sample';
 import Delayed from 'react-delayed';
 
@@ -8,7 +7,6 @@ export default class Samples extends Component {
     super(props);
 
     this.state = {
-      split: true,
       shouldRender: true,
       samplesRender: [],
       visible: false

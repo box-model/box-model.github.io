@@ -58,7 +58,6 @@ class App extends Component {
     this.handleChangeAggregate = InputHandlers.handleChangeAggregate.bind(this);
     this.OnAmountChange = InputHandlers.OnAmountChange.bind(this);
     this.OnModeChange = InputHandlers.OnModeChange.bind(this);
-    this.onQuickChange = InputHandlers.onQuickChange.bind(this);
 
     this.handleRepeat = RepeatHandlers.handleRepeat.bind(this);
     this.quickMode = RepeatHandlers.quickMode.bind(this);
@@ -128,7 +127,7 @@ class App extends Component {
               Joseph Alfredo
             </a>{' '}
             &{' '}
-            <a href="http://www.calpoly.edu/~dsun09" target="_blank">
+            <a href="https://dlsun.github.io/" target="_blank">
               Dennis L. Sun
             </a>
           </p>
@@ -141,8 +140,6 @@ class App extends Component {
                 amount={this.state.amount}
                 aggregate={this.state.aggregate}
                 handleRepeat={this.handleRepeat}
-                quickMode={this.state.quickMode}
-                onQuickChange={this.onQuickChange}
                 handleAlert={this.handleAlert}
                 lock={
                   this.state.lock !== APPLICATION_LOCK.NONE ||
@@ -291,8 +288,6 @@ class App extends Component {
                 }
                 statsControl={
                   <StatisticControl
-                    handleSum={this.handleSum}
-                    handleMean={this.handleMean}
                     handleAggregate={this.handleAggregate}
                     handleChangeAggregate={this.handleChangeAggregate}
                     aggregate={this.state.aggregate}

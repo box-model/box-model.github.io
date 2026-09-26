@@ -12,7 +12,7 @@ const module = (function() {
     /// Do the sampling and aggregation with animation up to QUICK_MODE_LIMIT
     /// then do the rest of the operation in quick mode
     /// </summary>
-    handleRepeat: function(quickMode, times) {
+    handleRepeat: function(times) {
       if (times <= 0) {
         this.handleAlert('Please enter positive value');
         return;
@@ -42,36 +42,31 @@ const module = (function() {
         this.setState({ step: APPLICATION_STEP.ANALYZE, isLooping: true });
       else this.setState({ isLooping: true });
 
-      if (quickMode) {
-        this.quickMode(times);
-        return;
-      } else {
-        const animationTimes = Math.min(QUICK_MODE_LIMIT, times);
-        let promise1 = new Promise((res, rej) => res());
-        for (let i = 0; i < animationTimes; i++) {
-          promise1 = promise1
-            .then(() => {
-              return new Promise((res, rej) => {
-                this.handleSampleTicket(
-                  this.state.mode,
-                  this.state.amount,
-                  res
-                );
-              });
-            })
-            .then(() => {
-              return new Promise((res, rej) => {
-                this.handleAggregate(this.state.aggregate,res);
-              });
-            });
-        }
-        promise1
+      const animationTimes = Math.min(QUICK_MODE_LIMIT, times);
+      let promise1 = new Promise((res, rej) => res());
+      for (let i = 0; i < animationTimes; i++) {
+        promise1 = promise1
           .then(() => {
-            if (times - QUICK_MODE_LIMIT > 0)
-              this.quickMode(times - QUICK_MODE_LIMIT);
+            return new Promise((res, rej) => {
+              this.handleSampleTicket(
+                this.state.mode,
+                this.state.amount,
+                res
+              );
+            });
           })
-          .then(() => this.setState({ isLooping: false }));
-      } 
+          .then(() => {
+            return new Promise((res, rej) => {
+              this.handleAggregate(this.state.aggregate, res);
+            });
+          });
+      }
+      promise1
+        .then(() => {
+          if (times - QUICK_MODE_LIMIT > 0)
+            this.quickMode(times - QUICK_MODE_LIMIT);
+        })
+        .then(() => this.setState({ isLooping: false }));
     },
     /// <summary>
     /// Do aggregation without any animation
