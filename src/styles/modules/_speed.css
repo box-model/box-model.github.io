@@ -1,0 +1,16 @@
+.speed-control {
+  /* sits to the right of the Sample button, clear of the highlighter's edge */
+  position: relative;
+  margin-left: 3.5rem;
+  width: 230px;
+}
+
+/* The label hangs above the slider without affecting its vertical centering,
+   so the slider itself lines up with the "Randomly draw" row. */
+.speed-label {
+  position: absolute;
+  bottom: 100%;
+  left: 0;
+  font-size: 0.9rem;
+  color: #6c757d;
+}

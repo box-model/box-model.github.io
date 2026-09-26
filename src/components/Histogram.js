@@ -216,19 +216,17 @@ export default class Histogram extends Component {
     // clear canvas
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-    // draw bars and axis
-    this.drawBars(bins);
-    this.drawAxis();
-
-    // determine how much to move bar towards value
+    // determine how far along the shrink is (1 = full height, 0 = gone)
     var time = new Date();
     var frac =
       1 - (time.getTime() - startTime) / (this.props.animationTime / 2);
-    if (frac < 0) {
+    if (frac <= 0) {
+      // finished: leave only the axis behind
+      this.drawAxis();
       return;
     }
 
-    // determine new bins
+    // draw the bars scaled down by frac
     var newBins = [];
     for (let bin of bins) {
       newBins.push({
@@ -237,9 +235,11 @@ export default class Histogram extends Component {
         amount: frac * bin.amount
       });
     }
+    this.drawBars(newBins);
+    this.drawAxis();
 
     window.requestAnimationFrame(function() {
-      that.shrinkBarsToZero(startTime, newBins);
+      that.shrinkBarsToZero(startTime, bins);
     });
   }
 
@@ -271,8 +271,12 @@ export default class Histogram extends Component {
       this.drawBars(bins);
     }
     // If there are no observations, but there were previously,
-    // animate the bins disappearing.
-    else if (prevProps !== undefined && prevProps.data.length > 0) {
+    // animate the bins disappearing (unless animation is turned off).
+    else if (
+      prevProps !== undefined &&
+      prevProps.data.length > 0 &&
+      this.props.animationTime > 0
+    ) {
       // get bins from data from prevProps
       var dataSorted = prevProps.data
         .map(Number)

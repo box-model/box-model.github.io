@@ -170,9 +170,13 @@ function toComment(sourceMap) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var MAX_TIME = exports.MAX_TIME = 3000;
-var MAX_DRAW_TIME = exports.MAX_DRAW_TIME = 1000;
 var QUICK_MODE_LIMIT = exports.QUICK_MODE_LIMIT = 5;
+// Animation speed slider: 0 is the slow end (one ticket per second),
+// SPEED_MAX is the fast end (no animation at all).
+var SPEED_MIN = exports.SPEED_MIN = 0;
+var SPEED_MAX = exports.SPEED_MAX = 100;
+var SLOWEST_DRAW_TIME = exports.SLOWEST_DRAW_TIME = 1000; // ms per ticket at the slow end
+var FASTEST_DRAW_TIME = exports.FASTEST_DRAW_TIME = 50; // ms per ticket just before "instant"
 var MODE = exports.MODE = { WITH: "WITH", WITHOUT: "WITHOUT" };
 var APPLICATION_STEP = exports.APPLICATION_STEP = {
   SAMPLE: 1,
@@ -1472,85 +1476,93 @@ __webpack_require__(48);
 
 var _Constants = __webpack_require__(2);
 
-var _ticketHandlers = __webpack_require__(60);
+var _ticketHandlers = __webpack_require__(61);
 
 var _ticketHandlers2 = _interopRequireDefault(_ticketHandlers);
 
-var _sampleHandlers = __webpack_require__(61);
+var _sampleHandlers = __webpack_require__(62);
 
 var _sampleHandlers2 = _interopRequireDefault(_sampleHandlers);
 
-var _AlertHandlers = __webpack_require__(62);
+var _AlertHandlers = __webpack_require__(63);
 
 var _AlertHandlers2 = _interopRequireDefault(_AlertHandlers);
 
-var _InputHandlers = __webpack_require__(63);
+var _InputHandlers = __webpack_require__(64);
 
 var _InputHandlers2 = _interopRequireDefault(_InputHandlers);
 
-var _RepeatHandlers = __webpack_require__(64);
+var _RepeatHandlers = __webpack_require__(65);
 
 var _RepeatHandlers2 = _interopRequireDefault(_RepeatHandlers);
 
-var _StatisticHandlers = __webpack_require__(65);
+var _StatisticHandlers = __webpack_require__(66);
 
 var _StatisticHandlers2 = _interopRequireDefault(_StatisticHandlers);
 
-var _FilterHandlers = __webpack_require__(66);
+var _FilterHandlers = __webpack_require__(67);
 
 var _FilterHandlers2 = _interopRequireDefault(_FilterHandlers);
 
-var _Tickets = __webpack_require__(67);
+var _SpeedHandlers = __webpack_require__(68);
+
+var _SpeedHandlers2 = _interopRequireDefault(_SpeedHandlers);
+
+var _Tickets = __webpack_require__(69);
 
 var _Tickets2 = _interopRequireDefault(_Tickets);
 
-var _Histogram = __webpack_require__(69);
+var _Histogram = __webpack_require__(71);
 
 var _Histogram2 = _interopRequireDefault(_Histogram);
 
-var _Samples = __webpack_require__(70);
+var _Samples = __webpack_require__(72);
 
 var _Samples2 = _interopRequireDefault(_Samples);
 
-var _Alert = __webpack_require__(73);
+var _Alert = __webpack_require__(75);
 
 var _Alert2 = _interopRequireDefault(_Alert);
 
-var _Statistic = __webpack_require__(74);
+var _Statistic = __webpack_require__(76);
 
 var _Statistic2 = _interopRequireDefault(_Statistic);
 
-var _Cycle = __webpack_require__(75);
+var _Cycle = __webpack_require__(77);
 
 var _Cycle2 = _interopRequireDefault(_Cycle);
 
-var _BoxControl = __webpack_require__(76);
+var _BoxControl = __webpack_require__(78);
 
 var _BoxControl2 = _interopRequireDefault(_BoxControl);
 
-var _SampleControl = __webpack_require__(77);
+var _SampleControl = __webpack_require__(79);
 
 var _SampleControl2 = _interopRequireDefault(_SampleControl);
 
-var _Repeat = __webpack_require__(78);
+var _Repeat = __webpack_require__(80);
 
 var _Repeat2 = _interopRequireDefault(_Repeat);
 
-var _StatisticControl = __webpack_require__(79);
+var _StatisticControl = __webpack_require__(81);
 
 var _StatisticControl2 = _interopRequireDefault(_StatisticControl);
 
-var _Bar = __webpack_require__(80);
+var _Bar = __webpack_require__(82);
 
 var _Bar2 = _interopRequireDefault(_Bar);
 
-var _FilterControl = __webpack_require__(81);
+var _FilterControl = __webpack_require__(83);
 
 var _FilterControl2 = _interopRequireDefault(_FilterControl);
 
-var _ChartInfo = __webpack_require__(82);
+var _ChartInfo = __webpack_require__(84);
 
 var _ChartInfo2 = _interopRequireDefault(_ChartInfo);
+
+var _SpeedControl = __webpack_require__(85);
+
+var _SpeedControl2 = _interopRequireDefault(_SpeedControl);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -1574,6 +1586,7 @@ var App = function (_Component) {
     _this.handleRemoveTicket = _ticketHandlers2.default.handleRemoveTicket.bind(_this);
     _this.handleResetTicket = _ticketHandlers2.default.handleResetTicket.bind(_this);
     _this.handleSampleTicket = _sampleHandlers2.default.handleSampleTicket.bind(_this);
+    _this.drawTickets = _sampleHandlers2.default.drawTickets.bind(_this);
     _this.handleEditTicket = _ticketHandlers2.default.handleEditTicket.bind(_this);
     _this.handleSetTicket = _ticketHandlers2.default.handleSetTicket.bind(_this);
 
@@ -1597,7 +1610,15 @@ var App = function (_Component) {
     _this.setFilterValue = _FilterHandlers2.default.setFilterValue.bind(_this);
     _this.calculateMean = _FilterHandlers2.default.calculateMean.bind(_this);
 
-    _this.setAnimationTime = _this.setAnimationTime.bind(_this);
+    _this.setSpeed = _SpeedHandlers2.default.setSpeed.bind(_this);
+    _this.onSpeedChange = _SpeedHandlers2.default.onSpeedChange.bind(_this);
+    _this.resetSpeed = _SpeedHandlers2.default.resetSpeed.bind(_this);
+    _this.setSliderActive = _SpeedHandlers2.default.setSliderActive.bind(_this);
+    _this.sliderActive = false;
+    _this.pendingReset = false;
+    _this.waitForAnimation = _SpeedHandlers2.default.waitForAnimation.bind(_this);
+    _this.rescheduleWait = _SpeedHandlers2.default.rescheduleWait.bind(_this);
+    _this.pendingWait = null;
     _this.state = {
       tickets: [1, 2, 3, 4, 5],
       samples: [],
@@ -1612,17 +1633,13 @@ var App = function (_Component) {
       isLooping: false,
       filterOperator: 'GE',
       filterValue: 10,
-      animationTime: 700
+      speed: _Constants.SPEED_MIN,
+      animationTime: (0, _SpeedHandlers.speedToAnimationTime)(_Constants.SPEED_MIN)
     };
     return _this;
   }
 
   _createClass(App, [{
-    key: 'setAnimationTime',
-    value: function setAnimationTime(time) {
-      return this.setState({ animationTime: time });
-    }
-  }, {
     key: 'componentWillUpdate',
     value: function componentWillUpdate() {
       if (this.state.step < _Constants.APPLICATION_STEP.ANALYZE && this.state.stats.length >= 2) {
@@ -1684,8 +1701,7 @@ var App = function (_Component) {
                 aggregate: this.state.aggregate,
                 handleRepeat: this.handleRepeat,
                 handleAlert: this.handleAlert,
-                lock: this.state.lock !== _Constants.APPLICATION_LOCK.NONE || this.state.isLooping,
-                setAnimationTime: this.setAnimationTime
+                lock: this.state.lock !== _Constants.APPLICATION_LOCK.NONE || this.state.isLooping
               })
             ),
             _react2.default.createElement(
@@ -1756,8 +1772,13 @@ var App = function (_Component) {
                   OnAmountChange: this.OnAmountChange,
                   OnModeChange: this.OnModeChange,
                   OnHandleReset: this.handleResetSample,
-                  lock: this.state.lock !== _Constants.APPLICATION_LOCK.NONE || this.state.isLooping,
-                  setAnimationTime: this.setAnimationTime
+                  resetSpeed: this.resetSpeed,
+                  lock: this.state.lock !== _Constants.APPLICATION_LOCK.NONE || this.state.isLooping
+                }),
+                speedControl: _react2.default.createElement(_SpeedControl2.default, {
+                  speed: this.state.speed,
+                  onSpeedChange: this.onSpeedChange,
+                  onSliderActive: this.setSliderActive
                 }),
                 sampleRecycle: _react2.default.createElement(
                   'div',
@@ -37241,9 +37262,10 @@ exports.i(__webpack_require__(51), "");
 exports.i(__webpack_require__(52), "");
 exports.i(__webpack_require__(54), "");
 exports.i(__webpack_require__(55), "");
-exports.i(__webpack_require__(57), "");
+exports.i(__webpack_require__(56), "");
 exports.i(__webpack_require__(58), "");
 exports.i(__webpack_require__(59), "");
+exports.i(__webpack_require__(60), "");
 
 // module
 exports.push([module.i, "", ""]);
@@ -37318,13 +37340,12 @@ exports.push([module.i, ".repeat {\n  height: 100%;\n  overflow: visible;\n}\n\n
 /* 55 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var escape = __webpack_require__(10);
 exports = module.exports = __webpack_require__(1)(false);
 // imports
 
 
 // module
-exports.push([module.i, "\n@font-face {\n  font-family: clockFont;\n  src: url(" + escape(__webpack_require__(56)) + ");\n}\n\n.stats-control{\n  height: 50px;\n}\n\n.stats-item{\n  font-display: block;\n  font-family: clockFont ,monospace;\n  float:left;\n  width: 100px !important;\n  height: 50px !important;\n  border: 1px solid black; \n  background: #D3E2E3;\n  margin: 0 1px;\n  font-size: 2em;\n  font-weight: bolder;\n}\n", ""]);
+exports.push([module.i, ".speed-control {\n  /* sits to the right of the Sample button, clear of the highlighter's edge */\n  position: relative;\n  margin-left: 3.5rem;\n  width: 230px;\n}\n\n/* The label hangs above the slider without affecting its vertical centering,\n   so the slider itself lines up with the \"Randomly draw\" row. */\n.speed-label {\n  position: absolute;\n  bottom: 100%;\n  left: 0;\n  font-size: 0.9rem;\n  color: #6c757d;\n}\n", ""]);
 
 // exports
 
@@ -37333,10 +37354,25 @@ exports.push([module.i, "\n@font-face {\n  font-family: clockFont;\n  src: url("
 /* 56 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__.p + "2803116d50a5be32e5435aba7d4bb941.ttf";
+var escape = __webpack_require__(10);
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n@font-face {\n  font-family: clockFont;\n  src: url(" + escape(__webpack_require__(57)) + ");\n}\n\n.stats-control{\n  height: 50px;\n}\n\n.stats-item{\n  font-display: block;\n  font-family: clockFont ,monospace;\n  float:left;\n  width: 100px !important;\n  height: 50px !important;\n  border: 1px solid black; \n  background: #D3E2E3;\n  margin: 0 1px;\n  font-size: 2em;\n  font-weight: bolder;\n}\n", ""]);
+
+// exports
+
 
 /***/ }),
 /* 57 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__.p + "2803116d50a5be32e5435aba7d4bb941.ttf";
+
+/***/ }),
+/* 58 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -37350,7 +37386,7 @@ exports.push([module.i, ".btn-large{\n  width: 130px;\n  height: 40px;\n}\n.btn-
 
 
 /***/ }),
-/* 58 */
+/* 59 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -37364,7 +37400,7 @@ exports.push([module.i, ".histogram{\n  position: absolute;\n  bottom: 0;\n  z-i
 
 
 /***/ }),
-/* 59 */
+/* 60 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(1)(false);
@@ -37378,7 +37414,7 @@ exports.push([module.i, ".my-alert{\n  position: fixed !important;\n  left: 33%;
 
 
 /***/ }),
-/* 60 */
+/* 61 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37450,7 +37486,7 @@ var _module = function () {
 exports.default = _module;
 
 /***/ }),
-/* 61 */
+/* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37467,18 +37503,13 @@ var _module = function () {
     handleResetSample: function handleResetSample(cb) {
       var _this = this;
 
-      typeof cb === "function" ? this.setState(function (prevState) {
-        return {
-          samples: [],
-          sampled: null,
-          lock: _Constants.APPLICATION_LOCK.NONE
-        };
-      }, function () {
-        return setTimeout(cb, _this.state.animationTime);
-      }) : this.setState(function (prevState) {
-        return { samples: [], sampled: null, lock: _Constants.APPLICATION_LOCK.NONE };
+      this.setState({ samples: [], sampled: null, lock: _Constants.APPLICATION_LOCK.NONE }, function () {
+        // Let the tickets finish flying down before the next step.
+        if (typeof cb === "function") _this.waitForAnimation(cb);
       });
     },
+    // Draw a sample of `amount` tickets; cb runs once the last ticket's
+    // animation has finished.
     handleSampleTicket: function handleSampleTicket(option, amount, cb) {
       var _this2 = this;
 
@@ -37512,64 +37543,52 @@ var _module = function () {
         this.setState({ step: 2 });
       }
 
+      // Lock the box, keep a copy of the tickets to draw from, then start drawing.
       this.setState(function (prevState) {
-        return { tickets: prevState.tickets.map(function (val) {
-            return parseFloat(val);
-          }) };
+        var tickets = prevState.tickets.map(function (val) {
+          return parseFloat(val);
+        });
+        return {
+          tickets: tickets,
+          sampled: tickets.concat(),
+          samples: [],
+          lock: _Constants.APPLICATION_LOCK.PROCESSING
+        };
       }, function () {
-        _this2.setState(function (prevState) {
-          return {
-            lock: _Constants.APPLICATION_LOCK.PROCESSING,
-            sampled: JSON.parse(JSON.stringify(prevState.tickets))
-          };
-        }, function () {
-          var promise1 = new Promise(function (res, rej) {
-            return res();
-          });
+        return _this2.drawTickets(option, parseInt(amount), cb);
+      });
+    },
+    /// <summary>
+    /// Draw the remaining tickets of the current sample. At the "instant" end
+    /// of the speed slider all remaining tickets are drawn in one update;
+    /// otherwise one ticket is drawn now and the next after animationTime.
+    /// Because the speed is re-read before every draw, moving the slider
+    /// while a sample is in progress takes effect right away.
+    /// </summary>
+    drawTickets: function drawTickets(option, remaining, cb) {
+      var _this3 = this;
 
-          var _loop = function _loop(i) {
-            promise1 = promise1.then(function () {
-              return new Promise(function (res, rej) {
-                var counter = i;
-                _this2.setState(function (prevState) {
-                  var sampleIndex = Math.floor(Math.random() * prevState.sampled.length);
-                  var newState = {};
-                  // add the new ticket to the sample
-                  newState.samples = prevState.samples.concat(prevState.sampled[sampleIndex]);
-
-                  if (option === _Constants.MODE.WITHOUT) {
-                    newState.sampled = prevState.sampled.filter(function (ticket, i) {
-                      return i !== sampleIndex;
-                    });
-                  }
-
-                  return newState;
-                }, res);
-              }).then(function () {
-                return new Promise(function (res, rej) {
-                  if (option === _Constants.MODE.WITH) {
-                    setTimeout(function () {
-                      _this2.setState(function (prevState) {
-                        return { sampled: prevState.tickets.concat() };
-                      });
-                    }, _this2.state.animationTime);
-                  }
-                  setTimeout(function () {
-                    if (i === amount - 1) {
-                      _this2.setState({ lock: _Constants.APPLICATION_LOCK.SAMPLING });
-                    }
-                    if (i === amount - 1 && typeof cb === "function") {
-                      cb();
-                    }
-                    res();
-                  }, Math.max(50, _this2.state.animationTime));
-                });
-              });
+      var howMany = this.state.animationTime === 0 ? remaining : 1;
+      this.setState(function (prevState) {
+        var sampled = prevState.sampled.concat();
+        var samples = prevState.samples.concat();
+        for (var i = 0; i < howMany; i++) {
+          var sampleIndex = Math.floor(Math.random() * sampled.length);
+          samples.push(sampled[sampleIndex]);
+          if (option === _Constants.MODE.WITHOUT) sampled.splice(sampleIndex, 1);
+        }
+        return { samples: samples, sampled: sampled };
+      }, function () {
+        var left = remaining - howMany;
+        // Wait for the ticket's animation before the next draw, or before
+        // handing the finished sample over (e.g. to be aggregated).
+        _this3.waitForAnimation(function () {
+          if (left > 0) {
+            _this3.drawTickets(option, left, cb);
+          } else {
+            _this3.setState({ lock: _Constants.APPLICATION_LOCK.SAMPLING }, function () {
+              if (typeof cb === "function") cb();
             });
-          };
-
-          for (var i = 0; i < amount; i++) {
-            _loop(i);
           }
         });
       });
@@ -37580,7 +37599,7 @@ var _module = function () {
 exports.default = _module;
 
 /***/ }),
-/* 62 */
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37603,7 +37622,7 @@ var _module = function () {
 exports.default = _module;
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37629,7 +37648,7 @@ var _module = function () {
 exports.default = _module;
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37673,6 +37692,12 @@ var _module = function () {
       }
 
       if (this.state.step < _Constants.APPLICATION_STEP.ANALYZE) this.setState({ step: _Constants.APPLICATION_STEP.ANALYZE, isLooping: true });else this.setState({ isLooping: true });
+
+      // At the "instant" end of the speed slider, skip the animation entirely.
+      if (this.state.animationTime === 0) {
+        this.quickMode(times);
+        return;
+      }
 
       var animationTimes = Math.min(_Constants.QUICK_MODE_LIMIT, times);
       var promise1 = new Promise(function (res, rej) {
@@ -37739,7 +37764,7 @@ var _module = function () {
 exports.default = _module;
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37808,7 +37833,7 @@ var _module = function () {
 exports.default = _module;
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37865,7 +37890,106 @@ var _module = function () {
 exports.default = _module;
 
 /***/ }),
-/* 67 */
+/* 68 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.speedToAnimationTime = speedToAnimationTime;
+
+var _Constants = __webpack_require__(2);
+
+/// <summary>
+/// Convert a slider position (0..SPEED_MAX) into milliseconds per ticket drawn.
+/// The scale is logarithmic so each step feels like a similar relative change.
+/// Position 0 is one ticket per second; SPEED_MAX means no animation at all.
+/// </summary>
+function speedToAnimationTime(speed) {
+  if (speed >= _Constants.SPEED_MAX) return 0;
+  var frac = speed / _Constants.SPEED_MAX;
+  return _Constants.SLOWEST_DRAW_TIME * Math.pow(_Constants.FASTEST_DRAW_TIME / _Constants.SLOWEST_DRAW_TIME, frac);
+}
+
+var _module = function () {
+  return {
+    setSpeed: function setSpeed(speed) {
+      var _this = this;
+
+      this.setState({ speed: speed, animationTime: speedToAnimationTime(speed) },
+      // If an animation is mid-way, make its pending wait match the new speed.
+      function () {
+        return _this.rescheduleWait();
+      });
+    },
+    onSpeedChange: function onSpeedChange(event) {
+      this.setSpeed(parseInt(event.target.value));
+    },
+    // Back to the slow end: used once a sample drawn by hand has finished.
+    resetSpeed: function resetSpeed() {
+      // While the thumb is held down the browser keeps it under the pointer
+      // and overrides any value we set, so wait for the release.
+      if (this.sliderActive) {
+        this.pendingReset = true;
+        return;
+      }
+      this.setSpeed(_Constants.SPEED_MIN);
+    },
+    // Called by the slider when the pointer is pressed on it and released.
+    setSliderActive: function setSliderActive(active) {
+      var _this2 = this;
+
+      this.sliderActive = active;
+      if (!active && this.pendingReset) {
+        this.pendingReset = false;
+        // Let the slider's own change event from the release settle first.
+        setTimeout(function () {
+          return _this2.resetSpeed();
+        }, 0);
+      }
+    },
+    /// <summary>
+    /// Run fn once the current animation interval has passed. Only one wait is
+    /// ever pending (sampling is sequential), and it is remembered so that a
+    /// speed change can shorten it or, at the "instant" setting, skip it.
+    /// </summary>
+    waitForAnimation: function waitForAnimation(fn) {
+      var _this3 = this;
+
+      if (this.state.animationTime === 0) {
+        fn();
+        return;
+      }
+      var wait = { fn: fn, start: Date.now(), id: null };
+      wait.id = setTimeout(function () {
+        _this3.pendingWait = null;
+        fn();
+      }, this.state.animationTime);
+      this.pendingWait = wait;
+    },
+    rescheduleWait: function rescheduleWait() {
+      var _this4 = this;
+
+      var wait = this.pendingWait;
+      if (!wait) return;
+      clearTimeout(wait.id);
+      var elapsed = Date.now() - wait.start;
+      var remaining = Math.max(0, this.state.animationTime - elapsed);
+      wait.id = setTimeout(function () {
+        _this4.pendingWait = null;
+        wait.fn();
+      }, remaining);
+    }
+  };
+}();
+
+exports.default = _module;
+
+/***/ }),
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37881,7 +38005,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Ticket = __webpack_require__(68);
+var _Ticket = __webpack_require__(70);
 
 var _Ticket2 = _interopRequireDefault(_Ticket);
 
@@ -37968,7 +38092,7 @@ var Tickets = function (_Component) {
 exports.default = Tickets;
 
 /***/ }),
-/* 68 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38023,7 +38147,7 @@ function Ticket(props) {
 exports.default = Ticket;
 
 /***/ }),
-/* 69 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38359,18 +38483,16 @@ var Histogram = function (_Component) {
       // clear canvas
       this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
-      // draw bars and axis
-      this.drawBars(bins);
-      this.drawAxis();
-
-      // determine how much to move bar towards value
+      // determine how far along the shrink is (1 = full height, 0 = gone)
       var time = new Date();
       var frac = 1 - (time.getTime() - startTime) / (this.props.animationTime / 2);
-      if (frac < 0) {
+      if (frac <= 0) {
+        // finished: leave only the axis behind
+        this.drawAxis();
         return;
       }
 
-      // determine new bins
+      // draw the bars scaled down by frac
       var newBins = [];
       var _iteratorNormalCompletion5 = true;
       var _didIteratorError5 = false;
@@ -38401,8 +38523,11 @@ var Histogram = function (_Component) {
         }
       }
 
+      this.drawBars(newBins);
+      this.drawAxis();
+
       window.requestAnimationFrame(function () {
-        that.shrinkBarsToZero(startTime, newBins);
+        that.shrinkBarsToZero(startTime, bins);
       });
     }
   }, {
@@ -38432,8 +38557,8 @@ var Histogram = function (_Component) {
         this.drawBars(bins);
       }
       // If there are no observations, but there were previously,
-      // animate the bins disappearing.
-      else if (prevProps !== undefined && prevProps.data.length > 0) {
+      // animate the bins disappearing (unless animation is turned off).
+      else if (prevProps !== undefined && prevProps.data.length > 0 && this.props.animationTime > 0) {
           // get bins from data from prevProps
           var dataSorted = prevProps.data.map(Number).concat().sort(function (a, b) {
             return a - b;
@@ -38477,7 +38602,7 @@ var Histogram = function (_Component) {
 exports.default = Histogram;
 
 /***/ }),
-/* 70 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38493,11 +38618,11 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Sample = __webpack_require__(71);
+var _Sample = __webpack_require__(73);
 
 var _Sample2 = _interopRequireDefault(_Sample);
 
-var _reactDelayed = __webpack_require__(72);
+var _reactDelayed = __webpack_require__(74);
 
 var _reactDelayed2 = _interopRequireDefault(_reactDelayed);
 
@@ -38536,6 +38661,15 @@ var Samples = function (_Component) {
         this.setState({ shouldRender: true, samplesRender: nextProps.samples });
       }
     }
+
+    // Departing tickets fly down to the statistics box in the same time
+    // it takes to draw one ticket, so the whole process runs at one speed.
+
+  }, {
+    key: 'leaveTime',
+    value: function leaveTime() {
+      return this.props.animationTime;
+    }
   }, {
     key: 'listSamples',
     value: function listSamples() {
@@ -38547,7 +38681,8 @@ var Samples = function (_Component) {
           value: value,
           key: index,
           shouldRender: _this2.state.shouldRender,
-          animationTime: _this2.props.animationTime
+          animationTime: _this2.props.animationTime,
+          leaveTime: _this2.leaveTime()
         });
       });
     }
@@ -38572,7 +38707,7 @@ var Samples = function (_Component) {
             {
               mounted: this.state.shouldRender,
               mountAfter: 0,
-              unmountAfter: 1500
+              unmountAfter: this.leaveTime()
             },
             _react2.default.createElement(
               'div',
@@ -38603,7 +38738,7 @@ var Samples = function (_Component) {
 exports.default = Samples;
 
 /***/ }),
-/* 71 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38612,7 +38747,8 @@ exports.default = Samples;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.default = Sample;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(0);
 
@@ -38620,60 +38756,90 @@ var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function Sample(props) {
-  var left = 10 + Math.floor(props.shift / 3) * 110;
-  var top = 10 + props.shift % 3 * 60;
-  var targetLeft = 330;
-  var targetTop = 235;
-  var sourceTop = -300;
-  var sourceLeft = 330;
-  var styleSheet = document.styleSheets[0];
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-  var animationNameLeave = 'animation-leave-' + props.shift;
-  var animationNameEnter = 'animation-enter-' + props.shift;
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-  var keyframesLeave = '@-webkit-keyframes ' + animationNameLeave + ' {\n      0% {-webkit-transform:translate(' + 0 + 'px, ' + 0 + 'px)}\n      50% {-webkit-transform:translate(' + (targetLeft - left) + 'px, ' + 0 + 'px)}\n      100% {-webkit-transform:translate(' + (targetLeft - left) + 'px, ' + (targetTop - top) + 'px)}\n  }';
-  var keyframesEnter = '@-webkit-keyframes ' + animationNameEnter + ' {\n      0% {-webkit-transform:translate(' + (sourceLeft - left) + 'px, ' + (sourceTop - top) + 'px)}\n      100% {-webkit-transform:translate(' + 0 + 'px, ' + 0 + 'px)}\n  }';
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-  var sampleStyle = {
-    position: 'absolute',
-    left: left + 'px',
-    top: top + 'px',
-    animation: animationNameEnter + ' ' + (props.animationTime / 1000 + 's') + ' forwards'
-  };
+var Sample = function (_Component) {
+  _inherits(Sample, _Component);
 
-  var animatedStyle = {
-    position: 'absolute',
-    left: left + 'px',
-    top: top + 'px',
-    animation: animationNameLeave + ' ' + (Math.max(200, props.animationTime) / 1000 + 's') + ' forwards'
-  };
+  function Sample(props) {
+    _classCallCheck(this, Sample);
 
-  styleSheet.deleteRule(0);
-  styleSheet.insertRule(keyframesLeave, props.shift, 0);
-  styleSheet.insertRule(keyframesEnter, props.shift, 0);
+    // The fly-in duration is fixed at the moment the ticket is drawn. If the
+    // speed changes afterwards (for example the slider resetting once a manual
+    // sample finishes), re-rendering must not restart the fly-in.
+    var _this = _possibleConstructorReturn(this, (Sample.__proto__ || Object.getPrototypeOf(Sample)).call(this, props));
 
-  return _react2.default.createElement(
-    'div',
-    {
-      style: props.shouldRender ? sampleStyle : animatedStyle,
-      className: 'ticket'
-    },
-    _react2.default.createElement('div', { className: 'top left' }),
-    _react2.default.createElement('div', { className: 'top right' }),
-    _react2.default.createElement('div', { className: 'bottom left' }),
-    _react2.default.createElement('div', { className: 'bottom right' }),
-    _react2.default.createElement('div', { className: 'ticket-inline' }),
-    _react2.default.createElement(
-      'strong',
-      null,
-      props.value
-    )
-  );
-}
+    _this.enterTime = props.animationTime;
+    return _this;
+  }
+
+  _createClass(Sample, [{
+    key: 'render',
+    value: function render() {
+      var props = this.props;
+      var left = 10 + Math.floor(props.shift / 3) * 110;
+      var top = 10 + props.shift % 3 * 60;
+      var targetLeft = 330;
+      var targetTop = 235;
+      var sourceTop = -300;
+      var sourceLeft = 330;
+      var styleSheet = document.styleSheets[0];
+
+      var animationNameLeave = 'animation-leave-' + props.shift;
+      var animationNameEnter = 'animation-enter-' + props.shift;
+
+      var keyframesLeave = '@-webkit-keyframes ' + animationNameLeave + ' {\n        0% {-webkit-transform:translate(' + 0 + 'px, ' + 0 + 'px)}\n        50% {-webkit-transform:translate(' + (targetLeft - left) + 'px, ' + 0 + 'px)}\n        100% {-webkit-transform:translate(' + (targetLeft - left) + 'px, ' + (targetTop - top) + 'px)}\n    }';
+      var keyframesEnter = '@-webkit-keyframes ' + animationNameEnter + ' {\n        0% {-webkit-transform:translate(' + (sourceLeft - left) + 'px, ' + (sourceTop - top) + 'px)}\n        100% {-webkit-transform:translate(' + 0 + 'px, ' + 0 + 'px)}\n    }';
+
+      var sampleStyle = {
+        position: 'absolute',
+        left: left + 'px',
+        top: top + 'px',
+        animation: animationNameEnter + ' ' + (this.enterTime / 1000 + 's') + ' forwards'
+      };
+
+      var animatedStyle = {
+        position: 'absolute',
+        left: left + 'px',
+        top: top + 'px',
+        animation: animationNameLeave + ' ' + (props.leaveTime / 1000 + 's') + ' forwards'
+      };
+
+      styleSheet.deleteRule(0);
+      styleSheet.insertRule(keyframesLeave, props.shift, 0);
+      styleSheet.insertRule(keyframesEnter, props.shift, 0);
+
+      return _react2.default.createElement(
+        'div',
+        {
+          style: props.shouldRender ? sampleStyle : animatedStyle,
+          className: 'ticket'
+        },
+        _react2.default.createElement('div', { className: 'top left' }),
+        _react2.default.createElement('div', { className: 'top right' }),
+        _react2.default.createElement('div', { className: 'bottom left' }),
+        _react2.default.createElement('div', { className: 'bottom right' }),
+        _react2.default.createElement('div', { className: 'ticket-inline' }),
+        _react2.default.createElement(
+          'strong',
+          null,
+          props.value
+        )
+      );
+    }
+  }]);
+
+  return Sample;
+}(_react.Component);
+
+exports.default = Sample;
 
 /***/ }),
-/* 72 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports =
@@ -39932,7 +40098,7 @@ exports.default = ReactDelayed;
 /******/ ]);
 
 /***/ }),
-/* 73 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39975,7 +40141,7 @@ function Alert(props) {
 }
 
 /***/ }),
-/* 74 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40044,7 +40210,7 @@ var Statistic = function (_Component) {
 exports.default = Statistic;
 
 /***/ }),
-/* 75 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40097,7 +40263,11 @@ var Cycle = function Cycle(props) {
         { className: "col-7" },
         props.samplesControls
       ),
-      _react2.default.createElement("div", { className: "col-5" })
+      _react2.default.createElement(
+        "div",
+        { className: "col-5 d-flex align-items-center" },
+        props.speedControl
+      )
     ),
     _react2.default.createElement(
       "div",
@@ -40195,7 +40365,7 @@ var Cycle = function Cycle(props) {
 exports.default = Cycle;
 
 /***/ }),
-/* 76 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40376,7 +40546,7 @@ var BoxControl = function (_Component) {
 exports.default = BoxControl;
 
 /***/ }),
-/* 77 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40417,9 +40587,9 @@ var SampleControl = function (_Component) {
   _createClass(SampleControl, [{
     key: 'handleSample',
     value: function handleSample() {
-      var timePerDraw = _Constants.MAX_DRAW_TIME * (Math.log10(this.props.amount) + 1) / this.props.amount;
-      this.props.setAnimationTime(timePerDraw);
-      this.props.handleSampleTicket(this.props.mode, parseInt(this.props.amount));
+      // Once a sample drawn by hand has finished animating, the speed slider
+      // returns to the slow end so the next step starts slowly.
+      this.props.handleSampleTicket(this.props.mode, parseInt(this.props.amount), this.props.resetSpeed);
     }
   }, {
     key: 'render',
@@ -40538,7 +40708,7 @@ var SampleControl = function (_Component) {
 exports.default = SampleControl;
 
 /***/ }),
-/* 78 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40588,9 +40758,6 @@ var Repeat = function (_Component) {
         this.props.handleAlert('Please enter correct number of times to repeat');
         return;
       }
-      var timePerDraw = _Constants.MAX_TIME * ((Math.log10(times) + 1) / times) * ((Math.log10(this.props.amount) + 1) / this.props.amount);
-
-      this.props.setAnimationTime(timePerDraw);
       this.props.handleRepeat(times);
     }
   }, {
@@ -40685,7 +40852,7 @@ var Repeat = function (_Component) {
 exports.default = Repeat;
 
 /***/ }),
-/* 79 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40791,7 +40958,7 @@ function StatsControl(props) {
 exports.default = StatsControl;
 
 /***/ }),
-/* 80 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40941,7 +41108,7 @@ var Bar = function (_Component) {
 exports.default = Bar;
 
 /***/ }),
-/* 81 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41121,7 +41288,7 @@ var FilterControl = function (_Component) {
 exports.default = FilterControl;
 
 /***/ }),
-/* 82 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41217,6 +41384,114 @@ var _react = __webpack_require__(0);
 var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/***/ }),
+/* 85 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(0);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _Constants = __webpack_require__(2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SpeedControl = function (_Component) {
+  _inherits(SpeedControl, _Component);
+
+  function SpeedControl(props) {
+    _classCallCheck(this, SpeedControl);
+
+    var _this = _possibleConstructorReturn(this, (SpeedControl.__proto__ || Object.getPrototypeOf(SpeedControl)).call(this, props));
+
+    _this.handlePress = _this.handlePress.bind(_this);
+    _this.handleRelease = _this.handleRelease.bind(_this);
+    return _this;
+  }
+
+  // Tell the app while the thumb is held down: the browser keeps the thumb
+  // under the pointer during a drag, so the app must not move it until the
+  // pointer is released (which can happen anywhere on the page).
+
+
+  _createClass(SpeedControl, [{
+    key: 'handlePress',
+    value: function handlePress() {
+      this.props.onSliderActive(true);
+      window.addEventListener('mouseup', this.handleRelease);
+      window.addEventListener('touchend', this.handleRelease);
+    }
+  }, {
+    key: 'handleRelease',
+    value: function handleRelease() {
+      window.removeEventListener('mouseup', this.handleRelease);
+      window.removeEventListener('touchend', this.handleRelease);
+      this.props.onSliderActive(false);
+    }
+  }, {
+    key: 'componentWillUnmount',
+    value: function componentWillUnmount() {
+      window.removeEventListener('mouseup', this.handleRelease);
+      window.removeEventListener('touchend', this.handleRelease);
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'div',
+        { className: 'speed-control' },
+        _react2.default.createElement(
+          'div',
+          { className: 'speed-label' },
+          'Speed'
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'd-flex align-items-center' },
+          _react2.default.createElement('i', {
+            className: 'fa fa-clock-o',
+            'aria-hidden': 'true',
+            title: 'One ticket per second'
+          }),
+          _react2.default.createElement('input', {
+            type: 'range',
+            className: 'custom-range mx-2',
+            id: 'speed',
+            min: _Constants.SPEED_MIN,
+            max: _Constants.SPEED_MAX,
+            step: '1',
+            value: this.props.speed,
+            onChange: this.props.onSpeedChange,
+            onMouseDown: this.handlePress,
+            onTouchStart: this.handlePress,
+            'aria-label': 'Animation speed'
+          }),
+          _react2.default.createElement('i', { className: 'fa fa-bolt', 'aria-hidden': 'true', title: 'Instantaneous' })
+        )
+      );
+    }
+  }]);
+
+  return SpeedControl;
+}(_react.Component);
+
+exports.default = SpeedControl;
 
 /***/ })
 /******/ ]);

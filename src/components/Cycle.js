@@ -17,7 +17,9 @@ const Cycle = props => {
       </div>
       <div className="row pl-3 p-1">
         <div className="col-7">{props.samplesControls}</div>
-        <div className="col-5" />
+        <div className="col-5 d-flex align-items-center">
+          {props.speedControl}
+        </div>
       </div>
       <div
         className={`row pl-3 p-1 ${

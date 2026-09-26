@@ -11,7 +11,8 @@ import {
   APPLICATION_LOCK,
   APPLICATION_STEP,
   MODE,
-  AGGREGATION_MODE
+  AGGREGATION_MODE,
+  SPEED_MIN
 } from './utils/Constants';
 
 import TicketHandlers from './utils/ticketHandlers';
@@ -21,6 +22,7 @@ import InputHandlers from './utils/InputHandlers';
 import RepeatHandlers from './utils/RepeatHandlers';
 import StatisticHandlers from './utils/StatisticHandlers';
 import FilterHandlers from './utils/FilterHandlers';
+import SpeedHandlers, { speedToAnimationTime } from './utils/SpeedHandlers';
 
 import Tickets from './components/box/Tickets';
 import Histogram from './components/Histogram';
@@ -35,6 +37,7 @@ import StatisticControl from './components/statistic/StatisticControl';
 import Bar from './components/Bar';
 import FilterControl from './components/FilterControl';
 import ChartInfo from './components/ChartInfo';
+import SpeedControl from './components/SpeedControl';
 
 class App extends Component {
   constructor(props) {
@@ -44,6 +47,7 @@ class App extends Component {
     this.handleRemoveTicket = TicketHandlers.handleRemoveTicket.bind(this);
     this.handleResetTicket = TicketHandlers.handleResetTicket.bind(this);
     this.handleSampleTicket = SampleHandlers.handleSampleTicket.bind(this);
+    this.drawTickets = SampleHandlers.drawTickets.bind(this);
     this.handleEditTicket = TicketHandlers.handleEditTicket.bind(this);
     this.handleSetTicket = TicketHandlers.handleSetTicket.bind(this);
 
@@ -67,7 +71,15 @@ class App extends Component {
     this.setFilterValue = FilterHandlers.setFilterValue.bind(this);
     this.calculateMean = FilterHandlers.calculateMean.bind(this);
 
-    this.setAnimationTime = this.setAnimationTime.bind(this);
+    this.setSpeed = SpeedHandlers.setSpeed.bind(this);
+    this.onSpeedChange = SpeedHandlers.onSpeedChange.bind(this);
+    this.resetSpeed = SpeedHandlers.resetSpeed.bind(this);
+    this.setSliderActive = SpeedHandlers.setSliderActive.bind(this);
+    this.sliderActive = false;
+    this.pendingReset = false;
+    this.waitForAnimation = SpeedHandlers.waitForAnimation.bind(this);
+    this.rescheduleWait = SpeedHandlers.rescheduleWait.bind(this);
+    this.pendingWait = null;
     this.state = {
       tickets: [1, 2, 3, 4, 5],
       samples: [],
@@ -82,12 +94,9 @@ class App extends Component {
       isLooping: false,
       filterOperator: 'GE',
       filterValue: 10,
-      animationTime: 700
+      speed: SPEED_MIN,
+      animationTime: speedToAnimationTime(SPEED_MIN)
     };
-  }
-
-  setAnimationTime(time) {
-    return this.setState({ animationTime: time });
   }
 
   componentWillUpdate() {
@@ -145,7 +154,6 @@ class App extends Component {
                   this.state.lock !== APPLICATION_LOCK.NONE ||
                   this.state.isLooping
                 }
-                setAnimationTime={this.setAnimationTime}
               />
             </div>
             <div className={`col-10`}>
@@ -231,11 +239,18 @@ class App extends Component {
                     OnAmountChange={this.OnAmountChange}
                     OnModeChange={this.OnModeChange}
                     OnHandleReset={this.handleResetSample}
+                    resetSpeed={this.resetSpeed}
                     lock={
                       this.state.lock !== APPLICATION_LOCK.NONE ||
                       this.state.isLooping
                     }
-                    setAnimationTime={this.setAnimationTime}
+                  />
+                }
+                speedControl={
+                  <SpeedControl
+                    speed={this.state.speed}
+                    onSpeedChange={this.onSpeedChange}
+                    onSliderActive={this.setSliderActive}
                   />
                 }
                 sampleRecycle={

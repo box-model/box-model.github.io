@@ -42,6 +42,12 @@ const module = (function() {
         this.setState({ step: APPLICATION_STEP.ANALYZE, isLooping: true });
       else this.setState({ isLooping: true });
 
+      // At the "instant" end of the speed slider, skip the animation entirely.
+      if (this.state.animationTime === 0) {
+        this.quickMode(times);
+        return;
+      }
+
       const animationTimes = Math.min(QUICK_MODE_LIMIT, times);
       let promise1 = new Promise((res, rej) => res());
       for (let i = 0; i < animationTimes; i++) {

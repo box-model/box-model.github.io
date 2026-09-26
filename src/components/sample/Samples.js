@@ -23,6 +23,12 @@ export default class Samples extends Component {
     }
   }
 
+  // Departing tickets fly down to the statistics box in the same time
+  // it takes to draw one ticket, so the whole process runs at one speed.
+  leaveTime() {
+    return this.props.animationTime;
+  }
+
   listSamples() {
     return this.state.samplesRender.map((value, index) => {
       return (
@@ -32,6 +38,7 @@ export default class Samples extends Component {
           key={index}
           shouldRender={this.state.shouldRender}
           animationTime={this.props.animationTime}
+          leaveTime={this.leaveTime()}
         />
       );
     });
@@ -45,7 +52,7 @@ export default class Samples extends Component {
           <Delayed
             mounted={this.state.shouldRender}
             mountAfter={0}
-            unmountAfter={1500}
+            unmountAfter={this.leaveTime()}
           >
             <div className="content">
               <div

@@ -2,21 +2,16 @@ import { APPLICATION_LOCK, MODE } from "./Constants";
 const module = (function() {
   return {
     handleResetSample: function(cb) {
-      typeof cb === "function"
-        ? this.setState(
-            prevState => {
-              return {
-                samples: [],
-                sampled: null,
-                lock: APPLICATION_LOCK.NONE
-              };
-            },
-            () => setTimeout(cb, this.state.animationTime)
-          )
-        : this.setState(prevState => {
-            return { samples: [], sampled: null, lock: APPLICATION_LOCK.NONE };
-          });
+      this.setState(
+        { samples: [], sampled: null, lock: APPLICATION_LOCK.NONE },
+        () => {
+          // Let the tickets finish flying down before the next step.
+          if (typeof cb === "function") this.waitForAnimation(cb);
+        }
+      );
     },
+    // Draw a sample of `amount` tickets; cb runs once the last ticket's
+    // animation has finished.
     handleSampleTicket: function(option, amount, cb) {
       if (this.state.lock !== APPLICATION_LOCK.NONE) {
         this.handleAlert("Please reset the samples!");
@@ -51,66 +46,53 @@ const module = (function() {
         this.setState({ step: 2 });
       }
 
+      // Lock the box, keep a copy of the tickets to draw from, then start drawing.
       this.setState(
         prevState => {
-          return { tickets: prevState.tickets.map(val => parseFloat(val)) };
+          const tickets = prevState.tickets.map(val => parseFloat(val));
+          return {
+            tickets: tickets,
+            sampled: tickets.concat(),
+            samples: [],
+            lock: APPLICATION_LOCK.PROCESSING
+          };
+        },
+        () => this.drawTickets(option, parseInt(amount), cb)
+      );
+    },
+    /// <summary>
+    /// Draw the remaining tickets of the current sample. At the "instant" end
+    /// of the speed slider all remaining tickets are drawn in one update;
+    /// otherwise one ticket is drawn now and the next after animationTime.
+    /// Because the speed is re-read before every draw, moving the slider
+    /// while a sample is in progress takes effect right away.
+    /// </summary>
+    drawTickets: function(option, remaining, cb) {
+      const howMany = this.state.animationTime === 0 ? remaining : 1;
+      this.setState(
+        prevState => {
+          const sampled = prevState.sampled.concat();
+          const samples = prevState.samples.concat();
+          for (let i = 0; i < howMany; i++) {
+            const sampleIndex = Math.floor(Math.random() * sampled.length);
+            samples.push(sampled[sampleIndex]);
+            if (option === MODE.WITHOUT) sampled.splice(sampleIndex, 1);
+          }
+          return { samples: samples, sampled: sampled };
         },
         () => {
-          this.setState(
-            prevState => {
-              return {
-                lock: APPLICATION_LOCK.PROCESSING,
-                sampled: JSON.parse(JSON.stringify(prevState.tickets))
-              };
-            },
-            () => {
-              let promise1 = new Promise((res, rej) => res());
-              for (let i = 0; i < amount; i++) {
-                promise1 = promise1.then(() => {
-                  return new Promise((res, rej) => {
-                    var counter = i;
-                    this.setState(prevState => {
-                      const sampleIndex = Math.floor(
-                        Math.random() * prevState.sampled.length
-                      );
-                      let newState = {};
-                      // add the new ticket to the sample
-                      newState.samples = prevState.samples.concat(
-                        prevState.sampled[sampleIndex]
-                      );
-
-                      if (option === MODE.WITHOUT) {
-                        newState.sampled = prevState.sampled.filter(
-                          (ticket, i) => i !== sampleIndex
-                        );
-                      }
-
-                      return newState;
-                    }, res);
-                  }).then(() => {
-                    return new Promise((res, rej) => {
-                      if (option === MODE.WITH) {
-                        setTimeout(() => {
-                          this.setState(prevState => {
-                            return { sampled: prevState.tickets.concat() };
-                          });
-                        }, this.state.animationTime);
-                      }
-                      setTimeout(() => {
-                        if (i === amount - 1) {
-                          this.setState({ lock: APPLICATION_LOCK.SAMPLING });
-                        }
-                        if (i === amount - 1 && typeof cb === "function") {
-                          cb();
-                        }
-                        res();
-                      }, Math.max(50, this.state.animationTime));
-                    });
-                  });
-                });
-              }
+          const left = remaining - howMany;
+          // Wait for the ticket's animation before the next draw, or before
+          // handing the finished sample over (e.g. to be aggregated).
+          this.waitForAnimation(() => {
+            if (left > 0) {
+              this.drawTickets(option, left, cb);
+            } else {
+              this.setState({ lock: APPLICATION_LOCK.SAMPLING }, () => {
+                if (typeof cb === "function") cb();
+              });
             }
-          );
+          });
         }
       );
     }

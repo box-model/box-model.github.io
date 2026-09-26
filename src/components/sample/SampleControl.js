@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { MAX_DRAW_TIME, APPLICATION_STEP } from '../../utils/Constants';
+import { APPLICATION_STEP } from '../../utils/Constants';
 
 export default class SampleControl extends Component {
   constructor(props) {
@@ -9,10 +9,13 @@ export default class SampleControl extends Component {
   }
 
   handleSample() {
-    const timePerDraw =
-      (MAX_DRAW_TIME * (Math.log10(this.props.amount) + 1)) / this.props.amount;
-    this.props.setAnimationTime(timePerDraw);
-    this.props.handleSampleTicket(this.props.mode, parseInt(this.props.amount));
+    // Once a sample drawn by hand has finished animating, the speed slider
+    // returns to the slow end so the next step starts slowly.
+    this.props.handleSampleTicket(
+      this.props.mode,
+      parseInt(this.props.amount),
+      this.props.resetSpeed
+    );
   }
 
   render() {

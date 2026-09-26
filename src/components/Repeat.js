@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { MAX_TIME, APPLICATION_STEP } from '../utils/Constants';
+import { APPLICATION_STEP } from '../utils/Constants';
 
 export default class Repeat extends Component {
   constructor(props) {
@@ -18,12 +18,6 @@ export default class Repeat extends Component {
       this.props.handleAlert('Please enter correct number of times to repeat');
       return;
     }
-    const timePerDraw =
-      MAX_TIME *
-      ((Math.log10(times) + 1) / times) *
-      ((Math.log10(this.props.amount) + 1) / this.props.amount);
-
-    this.props.setAnimationTime(timePerDraw);
     this.props.handleRepeat(times);
   }
 
