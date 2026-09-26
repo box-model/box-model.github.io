@@ -24,6 +24,11 @@
   display: block;
 }
 
+/* the gap left in the box by a ticket drawn without replacement */
+.ticket-placeholder {
+  visibility: hidden;
+}
+
 .ticket-inline {
   position: absolute;
   left: 7.5px;

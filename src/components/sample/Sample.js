@@ -1,68 +1,107 @@
 import React, { Component } from 'react';
+import { ticketPosition } from '../../utils/ticketLayout';
+
+// Where departing tickets fly to (towards the statistics box), in the
+// sample area's coordinates.
+const LEAVE_TARGET = { left: 330, top: 235 };
+// Where tickets fly in from if their source in the box can't be found.
+const FALLBACK_SOURCE = { left: 330, top: -300 };
 
 export default class Sample extends Component {
-  constructor(props) {
-    super(props);
-    // The fly-in duration is fixed at the moment the ticket is drawn. If the
-    // speed changes afterwards (for example the slider resetting once a manual
-    // sample finishes), re-rendering must not restart the fly-in.
-    this.enterTime = props.animationTime;
+  componentDidMount() {
+    if (this.props.shouldRender) this.flyIn();
+  }
+
+  componentDidUpdate(prevProps) {
+    if (prevProps.shouldRender && !this.props.shouldRender) {
+      this.flyOut();
+    } else if (!prevProps.shouldRender && this.props.shouldRender) {
+      // This element is being reused for the first ticket of a new sample.
+      this.flyIn();
+    }
+  }
+
+  componentWillUnmount() {
+    this.cancel();
+  }
+
+  cancel() {
+    if (this.anim) {
+      this.anim.cancel();
+      this.anim = null;
+    }
+  }
+
+  animate(keyframes, duration) {
+    if (!this.el || !this.el.animate || duration <= 0) return;
+    this.anim = this.el.animate(keyframes, {
+      duration: duration,
+      easing: 'ease-in-out',
+      fill: 'forwards'
+    });
+  }
+
+  // Fly in from the drawn ticket's actual place in the box. Positions are
+  // measured on screen, so the box's scroll offset is accounted for.
+  flyIn() {
+    this.cancel();
+    const duration = this.props.animationTime;
+    if (!this.el || duration <= 0) return;
+    const dest = this.el.getBoundingClientRect();
+    const source =
+      this.props.origin != null
+        ? document.querySelector(`[data-box-index="${this.props.origin}"]`)
+        : null;
+    let from;
+    if (source) {
+      const rect = source.getBoundingClientRect();
+      from = { x: rect.left - dest.left, y: rect.top - dest.top };
+    } else {
+      const pos = ticketPosition(this.props.shift);
+      from = {
+        x: FALLBACK_SOURCE.left - pos.left,
+        y: FALLBACK_SOURCE.top - pos.top
+      };
+    }
+    this.animate(
+      [
+        { transform: `translate(${from.x}px, ${from.y}px)` },
+        { transform: 'translate(0px, 0px)' }
+      ],
+      duration
+    );
+  }
+
+  // Fly down towards the statistics box when the sample is aggregated.
+  flyOut() {
+    this.cancel();
+    const pos = ticketPosition(this.props.shift);
+    const dx = LEAVE_TARGET.left - pos.left;
+    const dy = LEAVE_TARGET.top - pos.top;
+    this.animate(
+      [
+        { transform: 'translate(0px, 0px)' },
+        { transform: `translate(${dx}px, 0px)`, offset: 0.5 },
+        { transform: `translate(${dx}px, ${dy}px)` }
+      ],
+      this.props.leaveTime
+    );
   }
 
   render() {
-    const props = this.props;
-    const left = 10 + Math.floor(props.shift / 3) * 110;
-    const top = 10 + (props.shift % 3) * 60;
-    const targetLeft = 330;
-    const targetTop = 235;
-    const sourceTop = -300;
-    const sourceLeft = 330;
-    let styleSheet = document.styleSheets[0];
-
-    let animationNameLeave = `animation-leave-${props.shift}`;
-    let animationNameEnter = `animation-enter-${props.shift}`;
-
-    let keyframesLeave = `@-webkit-keyframes ${animationNameLeave} {
-        0% {-webkit-transform:translate(${0}px, ${0}px)}
-        50% {-webkit-transform:translate(${targetLeft - left}px, ${0}px)}
-        100% {-webkit-transform:translate(${targetLeft - left}px, ${targetTop -
-      top}px)}
-    }`;
-    let keyframesEnter = `@-webkit-keyframes ${animationNameEnter} {
-        0% {-webkit-transform:translate(${sourceLeft - left}px, ${sourceTop -
-      top}px)}
-        100% {-webkit-transform:translate(${0}px, ${0}px)}
-    }`;
-
-    const sampleStyle = {
-      position: 'absolute',
-      left: left + 'px',
-      top: top + 'px',
-      animation: `${animationNameEnter} ${this.enterTime / 1000 + 's'} forwards`
-    };
-
-    const animatedStyle = {
-      position: 'absolute',
-      left: left + 'px',
-      top: top + 'px',
-      animation: `${animationNameLeave} ${props.leaveTime / 1000 + 's'} forwards`
-    };
-
-    styleSheet.deleteRule(0);
-    styleSheet.insertRule(keyframesLeave, props.shift, 0);
-    styleSheet.insertRule(keyframesEnter, props.shift, 0);
-
+    const pos = ticketPosition(this.props.shift);
     return (
       <div
-        style={props.shouldRender ? sampleStyle : animatedStyle}
-        className={`ticket`}
+        ref={el => (this.el = el)}
+        style={{ position: 'absolute', left: pos.left + 'px', top: pos.top + 'px' }}
+        className="ticket"
       >
         <div className="top left" />
         <div className="top right" />
         <div className="bottom left" />
         <div className="bottom right" />
         <div className="ticket-inline" />
-        <strong>{props.value}</strong>
+        <strong>{this.props.value}</strong>
       </div>
     );
   }

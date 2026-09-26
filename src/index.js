@@ -48,6 +48,7 @@ class App extends Component {
     this.handleResetTicket = TicketHandlers.handleResetTicket.bind(this);
     this.handleSampleTicket = SampleHandlers.handleSampleTicket.bind(this);
     this.drawTickets = SampleHandlers.drawTickets.bind(this);
+    this.revealBoxTicket = SampleHandlers.revealBoxTicket.bind(this);
     this.handleEditTicket = TicketHandlers.handleEditTicket.bind(this);
     this.handleSetTicket = TicketHandlers.handleSetTicket.bind(this);
 
@@ -83,8 +84,10 @@ class App extends Component {
     this.state = {
       tickets: [1, 2, 3, 4, 5],
       samples: [],
+      sampleOrigins: [],
       lock: APPLICATION_LOCK.NONE,
       sampled: null,
+      lastDraw: null,
       stats: [],
       amount: 3,
       mode: MODE.WITH,
@@ -188,11 +191,7 @@ class App extends Component {
                     handleAddTicket={this.handleAddTicket}
                     handleResetTicket={this.handleResetTicket}
                     handleAlert={this.handleAlert}
-                    tickets={
-                      this.state.sampled !== null
-                        ? this.state.sampled
-                        : this.state.tickets
-                    }
+                    tickets={this.state.tickets}
                     handleEditTicket={this.handleEditTicket}
                   />
                 }
@@ -205,6 +204,8 @@ class App extends Component {
                         : this.state.tickets
                     }
                     handleRemoveTicket={this.handleRemoveTicket}
+                    lastDraw={this.state.lastDraw}
+                    animationTime={this.state.animationTime}
                   />
                 }
                 boxChartInfo={
@@ -223,6 +224,7 @@ class App extends Component {
                 samples={
                   <Samples
                     samples={this.state.samples}
+                    origins={this.state.sampleOrigins}
                     animationTime={this.state.animationTime}
                     lock={
                       this.state.lock !== APPLICATION_LOCK.NONE ||

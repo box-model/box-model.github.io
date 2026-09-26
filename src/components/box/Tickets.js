@@ -10,13 +10,15 @@ export default class Tickets extends Component {
   }
 
   listTickets() {
+    const lastDraw = this.props.lastDraw;
     return this.props.tickets.map((value, index) => {
       return (
         <Ticket
           key={index}
           value={value}
-          shift={index}
           index={index}
+          drawSerial={lastDraw && lastDraw.index === index ? lastDraw.serial : 0}
+          animationTime={this.props.animationTime}
           handleRemoveTicket={this.props.handleRemoveTicket}
           lock={this.props.lock}
         />
@@ -29,7 +31,8 @@ export default class Tickets extends Component {
       <div>
         <div className="row box">
           <div className="background-tag">Box</div>
-          <div className={`content`}>
+          {/* id lets the sampler scroll a ticket into view before drawing it */}
+          <div className="content" id="box-content">
             <div
               className={`wrapper ${
                 this.state.visible && !this.props.lock

@@ -9,17 +9,21 @@ export default class Samples extends Component {
     this.state = {
       shouldRender: true,
       samplesRender: [],
+      originsRender: [],
       visible: false
     };
   }
 
   componentWillReceiveProps(nextProps) {
     if (nextProps.samples.length === 0) {
-      // console.log("gone");
+      // Keep the last sample rendered so its tickets can fly out.
       this.setState({ shouldRender: false });
     } else {
-      // console.log("new");
-      this.setState({ shouldRender: true, samplesRender: nextProps.samples });
+      this.setState({
+        shouldRender: true,
+        samplesRender: nextProps.samples,
+        originsRender: nextProps.origins
+      });
     }
   }
 
@@ -35,6 +39,7 @@ export default class Samples extends Component {
         <Sample
           shift={index}
           value={value}
+          origin={this.state.originsRender[index]}
           key={index}
           shouldRender={this.state.shouldRender}
           animationTime={this.props.animationTime}

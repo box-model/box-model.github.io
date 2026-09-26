@@ -1,9 +1,27 @@
 import { APPLICATION_LOCK, MODE } from "./Constants";
+import { isTicketVisible, scrollToTicket } from "./ticketLayout";
+
+// Pick a random ticket index from the display copy of the box, skipping the
+// gaps left by earlier draws without replacement.
+function pickTicket(sampled) {
+  const available = [];
+  sampled.forEach((val, i) => {
+    if (val !== null) available.push(i);
+  });
+  return available[Math.floor(Math.random() * available.length)];
+}
+
 const module = (function() {
   return {
     handleResetSample: function(cb) {
       this.setState(
-        { samples: [], sampled: null, lock: APPLICATION_LOCK.NONE },
+        {
+          samples: [],
+          sampleOrigins: [],
+          sampled: null,
+          lastDraw: null,
+          lock: APPLICATION_LOCK.NONE
+        },
         () => {
           // Let the tickets finish flying down before the next step.
           if (typeof cb === "function") this.waitForAnimation(cb);
@@ -54,6 +72,8 @@ const module = (function() {
             tickets: tickets,
             sampled: tickets.concat(),
             samples: [],
+            sampleOrigins: [],
+            lastDraw: null,
             lock: APPLICATION_LOCK.PROCESSING
           };
         },
@@ -62,38 +82,89 @@ const module = (function() {
     },
     /// <summary>
     /// Draw the remaining tickets of the current sample. At the "instant" end
-    /// of the speed slider all remaining tickets are drawn in one update;
-    /// otherwise one ticket is drawn now and the next after animationTime.
-    /// Because the speed is re-read before every draw, moving the slider
-    /// while a sample is in progress takes effect right away.
+    /// of the speed slider all remaining tickets are drawn in one update.
+    /// Otherwise one ticket is chosen, scrolled into view in the box if
+    /// necessary, drawn (it flies from its place in the box to the sample),
+    /// and the next draw follows after animationTime. Because the speed is
+    /// re-read before every draw, moving the slider mid-sample takes effect
+    /// right away.
+    ///
+    /// `sampled` is the display copy of the box: drawing without replacement
+    /// leaves a null gap so the remaining tickets keep their places.
+    /// `sampleOrigins` records which box index each sample ticket came from.
     /// </summary>
     drawTickets: function(option, remaining, cb) {
-      const howMany = this.state.animationTime === 0 ? remaining : 1;
-      this.setState(
-        prevState => {
-          const sampled = prevState.sampled.concat();
-          const samples = prevState.samples.concat();
-          for (let i = 0; i < howMany; i++) {
-            const sampleIndex = Math.floor(Math.random() * sampled.length);
-            samples.push(sampled[sampleIndex]);
-            if (option === MODE.WITHOUT) sampled.splice(sampleIndex, 1);
+      const afterDraw = left => {
+        // Wait for the ticket's animation before the next draw, or before
+        // handing the finished sample over (e.g. to be aggregated).
+        this.waitForAnimation(() => {
+          if (left > 0) {
+            this.drawTickets(option, left, cb);
+          } else {
+            this.setState({ lock: APPLICATION_LOCK.SAMPLING }, () => {
+              if (typeof cb === "function") cb();
+            });
           }
-          return { samples: samples, sampled: sampled };
-        },
-        () => {
-          const left = remaining - howMany;
-          // Wait for the ticket's animation before the next draw, or before
-          // handing the finished sample over (e.g. to be aggregated).
-          this.waitForAnimation(() => {
-            if (left > 0) {
-              this.drawTickets(option, left, cb);
-            } else {
-              this.setState({ lock: APPLICATION_LOCK.SAMPLING }, () => {
-                if (typeof cb === "function") cb();
-              });
+        });
+      };
+
+      if (this.state.animationTime === 0) {
+        this.setState(
+          prevState => {
+            const sampled = prevState.sampled.concat();
+            const samples = prevState.samples.concat();
+            const origins = prevState.sampleOrigins.concat();
+            for (let i = 0; i < remaining; i++) {
+              const index = pickTicket(sampled);
+              samples.push(sampled[index]);
+              origins.push(index);
+              if (option === MODE.WITHOUT) sampled[index] = null;
             }
-          });
-        }
+            return {
+              samples: samples,
+              sampleOrigins: origins,
+              sampled: sampled,
+              lastDraw: null
+            };
+          },
+          () => afterDraw(0)
+        );
+        return;
+      }
+
+      // Choose the ticket first so the box can scroll it into view.
+      const index = pickTicket(this.state.sampled);
+      this.revealBoxTicket(index, () => {
+        this.setState(
+          prevState => {
+            const sampled = prevState.sampled.concat();
+            const value = sampled[index];
+            if (option === MODE.WITHOUT) sampled[index] = null;
+            const serial = prevState.lastDraw ? prevState.lastDraw.serial : 0;
+            return {
+              samples: prevState.samples.concat(value),
+              sampleOrigins: prevState.sampleOrigins.concat(index),
+              sampled: sampled,
+              lastDraw: { index: index, serial: serial + 1 }
+            };
+          },
+          () => afterDraw(remaining - 1)
+        );
+      });
+    },
+    // Scroll the box so the ticket about to be drawn is on screen, taking at
+    // most half a draw interval. If it is already visible, done runs at once.
+    revealBoxTicket: function(index, done) {
+      const container = document.getElementById("box-content");
+      if (!container || isTicketVisible(container, index)) {
+        done();
+        return;
+      }
+      scrollToTicket(
+        container,
+        index,
+        Math.min(400, this.state.animationTime / 2),
+        done
       );
     }
   };
