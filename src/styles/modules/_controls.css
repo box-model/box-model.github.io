@@ -1,0 +1,15 @@
+/* A sentence of controls followed by its action button, centred under the
+   box. The sentence never breaks; if sentence and button together don't fit
+   the column, the button drops onto its own line beneath. */
+.control-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.control-row .control-sentence {
+  flex-wrap: nowrap;
+  white-space: nowrap;
+  margin-right: 1rem;
+}

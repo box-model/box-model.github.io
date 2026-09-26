@@ -1535,91 +1535,91 @@ __webpack_require__(49);
 
 var _Constants = __webpack_require__(2);
 
-var _ticketHandlers = __webpack_require__(62);
+var _ticketHandlers = __webpack_require__(63);
 
 var _ticketHandlers2 = _interopRequireDefault(_ticketHandlers);
 
-var _sampleHandlers = __webpack_require__(63);
+var _sampleHandlers = __webpack_require__(64);
 
 var _sampleHandlers2 = _interopRequireDefault(_sampleHandlers);
 
-var _AlertHandlers = __webpack_require__(64);
+var _AlertHandlers = __webpack_require__(65);
 
 var _AlertHandlers2 = _interopRequireDefault(_AlertHandlers);
 
-var _InputHandlers = __webpack_require__(65);
+var _InputHandlers = __webpack_require__(66);
 
 var _InputHandlers2 = _interopRequireDefault(_InputHandlers);
 
-var _RepeatHandlers = __webpack_require__(66);
+var _RepeatHandlers = __webpack_require__(67);
 
 var _RepeatHandlers2 = _interopRequireDefault(_RepeatHandlers);
 
-var _StatisticHandlers = __webpack_require__(67);
+var _StatisticHandlers = __webpack_require__(68);
 
 var _StatisticHandlers2 = _interopRequireDefault(_StatisticHandlers);
 
-var _FilterHandlers = __webpack_require__(68);
+var _FilterHandlers = __webpack_require__(69);
 
 var _FilterHandlers2 = _interopRequireDefault(_FilterHandlers);
 
-var _SpeedHandlers = __webpack_require__(69);
+var _SpeedHandlers = __webpack_require__(70);
 
 var _SpeedHandlers2 = _interopRequireDefault(_SpeedHandlers);
 
-var _Tickets = __webpack_require__(70);
+var _Tickets = __webpack_require__(71);
 
 var _Tickets2 = _interopRequireDefault(_Tickets);
 
-var _Histogram = __webpack_require__(72);
+var _Histogram = __webpack_require__(73);
 
 var _Histogram2 = _interopRequireDefault(_Histogram);
 
-var _Samples = __webpack_require__(73);
+var _Samples = __webpack_require__(74);
 
 var _Samples2 = _interopRequireDefault(_Samples);
 
-var _Alert = __webpack_require__(76);
+var _Alert = __webpack_require__(77);
 
 var _Alert2 = _interopRequireDefault(_Alert);
 
-var _Statistic = __webpack_require__(77);
+var _Statistic = __webpack_require__(78);
 
 var _Statistic2 = _interopRequireDefault(_Statistic);
 
-var _Cycle = __webpack_require__(78);
+var _Cycle = __webpack_require__(79);
 
 var _Cycle2 = _interopRequireDefault(_Cycle);
 
-var _BoxControl = __webpack_require__(79);
+var _BoxControl = __webpack_require__(80);
 
 var _BoxControl2 = _interopRequireDefault(_BoxControl);
 
-var _SampleControl = __webpack_require__(80);
+var _SampleControl = __webpack_require__(81);
 
 var _SampleControl2 = _interopRequireDefault(_SampleControl);
 
-var _Repeat = __webpack_require__(81);
+var _Repeat = __webpack_require__(82);
 
 var _Repeat2 = _interopRequireDefault(_Repeat);
 
-var _StatisticControl = __webpack_require__(82);
+var _StatisticControl = __webpack_require__(83);
 
 var _StatisticControl2 = _interopRequireDefault(_StatisticControl);
 
-var _Bar = __webpack_require__(83);
+var _Bar = __webpack_require__(84);
 
 var _Bar2 = _interopRequireDefault(_Bar);
 
-var _FilterControl = __webpack_require__(84);
+var _FilterControl = __webpack_require__(85);
 
 var _FilterControl2 = _interopRequireDefault(_FilterControl);
 
-var _ChartInfo = __webpack_require__(85);
+var _ChartInfo = __webpack_require__(86);
 
 var _ChartInfo2 = _interopRequireDefault(_ChartInfo);
 
-var _SpeedControl = __webpack_require__(86);
+var _SpeedControl = __webpack_require__(87);
 
 var _SpeedControl2 = _interopRequireDefault(_SpeedControl);
 
@@ -37331,6 +37331,7 @@ exports.i(__webpack_require__(57), "");
 exports.i(__webpack_require__(59), "");
 exports.i(__webpack_require__(60), "");
 exports.i(__webpack_require__(61), "");
+exports.i(__webpack_require__(62), "");
 
 // module
 exports.push([module.i, "", ""]);
@@ -37459,7 +37460,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, ".histogram{\n  position: absolute;\n  bottom: 0;\n  z-index: 0;\n  left: 20%;\n}\n\n.chart{\n  position: absolute;\n  top: 30%;\n  right: -50%;\n}\n\n.chart-item{\n  width: 45px !important; \n}", ""]);
+exports.push([module.i, "/* A sentence of controls followed by its action button, centred under the\n   box. The sentence never breaks; if sentence and button together don't fit\n   the column, the button drops onto its own line beneath. */\n.control-row {\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: center;\n  align-items: center;\n}\n\n.control-row .control-sentence {\n  flex-wrap: nowrap;\n  white-space: nowrap;\n  margin-right: 1rem;\n}\n", ""]);
 
 // exports
 
@@ -37473,13 +37474,27 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, ".my-alert{\n  position: fixed !important;\n  left: 33%;\n  width: 500px;\n  top: 25%;\n  z-index: 99;\n}", ""]);
+exports.push([module.i, ".histogram{\n  position: absolute;\n  bottom: 0;\n  z-index: 0;\n  left: 20%;\n}\n\n.chart{\n  position: absolute;\n  top: 30%;\n  right: -50%;\n}\n\n.chart-item{\n  width: 45px !important; \n}", ""]);
 
 // exports
 
 
 /***/ }),
 /* 62 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, ".my-alert{\n  position: fixed !important;\n  left: 33%;\n  width: 500px;\n  top: 25%;\n  z-index: 99;\n}", ""]);
+
+// exports
+
+
+/***/ }),
+/* 63 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37551,7 +37566,7 @@ var _module = function () {
 exports.default = _module;
 
 /***/ }),
-/* 63 */
+/* 64 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37731,7 +37746,7 @@ var _module = function () {
 exports.default = _module;
 
 /***/ }),
-/* 64 */
+/* 65 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37754,7 +37769,7 @@ var _module = function () {
 exports.default = _module;
 
 /***/ }),
-/* 65 */
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37780,7 +37795,7 @@ var _module = function () {
 exports.default = _module;
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37896,7 +37911,7 @@ var _module = function () {
 exports.default = _module;
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -37965,7 +37980,7 @@ var _module = function () {
 exports.default = _module;
 
 /***/ }),
-/* 68 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38022,7 +38037,7 @@ var _module = function () {
 exports.default = _module;
 
 /***/ }),
-/* 69 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38121,7 +38136,7 @@ var _module = function () {
 exports.default = _module;
 
 /***/ }),
-/* 70 */
+/* 71 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38137,7 +38152,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Ticket = __webpack_require__(71);
+var _Ticket = __webpack_require__(72);
 
 var _Ticket2 = _interopRequireDefault(_Ticket);
 
@@ -38226,7 +38241,7 @@ var Tickets = function (_Component) {
 exports.default = Tickets;
 
 /***/ }),
-/* 71 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38332,7 +38347,7 @@ var Ticket = function (_Component) {
 exports.default = Ticket;
 
 /***/ }),
-/* 72 */
+/* 73 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38787,7 +38802,7 @@ var Histogram = function (_Component) {
 exports.default = Histogram;
 
 /***/ }),
-/* 73 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -38803,11 +38818,11 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Sample = __webpack_require__(74);
+var _Sample = __webpack_require__(75);
 
 var _Sample2 = _interopRequireDefault(_Sample);
 
-var _reactDelayed = __webpack_require__(75);
+var _reactDelayed = __webpack_require__(76);
 
 var _reactDelayed2 = _interopRequireDefault(_reactDelayed);
 
@@ -38928,7 +38943,7 @@ var Samples = function (_Component) {
 exports.default = Samples;
 
 /***/ }),
-/* 74 */
+/* 75 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -39079,7 +39094,7 @@ var Sample = function (_Component) {
 exports.default = Sample;
 
 /***/ }),
-/* 75 */
+/* 76 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports =
@@ -40338,7 +40353,7 @@ exports.default = ReactDelayed;
 /******/ ]);
 
 /***/ }),
-/* 76 */
+/* 77 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40381,7 +40396,7 @@ function Alert(props) {
 }
 
 /***/ }),
-/* 77 */
+/* 78 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40450,7 +40465,7 @@ var Statistic = function (_Component) {
 exports.default = Statistic;
 
 /***/ }),
-/* 78 */
+/* 79 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40605,7 +40620,7 @@ var Cycle = function Cycle(props) {
 exports.default = Cycle;
 
 /***/ }),
-/* 79 */
+/* 80 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40786,7 +40801,7 @@ var BoxControl = function (_Component) {
 exports.default = BoxControl;
 
 /***/ }),
-/* 80 */
+/* 81 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -40834,6 +40849,7 @@ var SampleControl = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
+      var highlight = this.props.step >= _Constants.APPLICATION_STEP.REPEAT ? 'input-highlighter-color' : '';
       return _react2.default.createElement(
         'div',
         null,
@@ -40853,75 +40869,72 @@ var SampleControl = function (_Component) {
         ),
         _react2.default.createElement(
           'div',
-          { className: 'row no-gutters m-0 p-0' },
+          { className: 'control-row' },
           _react2.default.createElement(
-            'div',
-            { className: 'col-8' },
+            'form',
+            {
+              className: 'form-inline control-sentence',
+              onSubmit: function onSubmit(e) {
+                return e.preventDefault();
+              }
+            },
+            'Randomly draw',
             _react2.default.createElement(
-              'form',
-              { className: 'form-inline float-right mt-1' },
-              'Randomly draw',
-              _react2.default.createElement(
-                'div',
-                { className: 'input-group mx-2' },
-                _react2.default.createElement('input', {
-                  name: 'sample-amount',
-                  type: 'text',
-                  className: 'form-control underline ' + (this.props.step >= _Constants.APPLICATION_STEP.REPEAT ? 'input-highlighter-color' : ''),
-                  id: 'input-amount',
-                  placeholder: 'Amount',
-                  value: this.props.amount,
-                  style: {
-                    width: (this.props.amount != 0 ? Math.min(this.props.amount.toString().length * 10, 80) : 60) + 'px'
-                  },
-                  maxLength: '8',
-                  onChange: this.props.OnAmountChange,
-                  disabled: this.props.lock
-                })
-              ),
-              _react2.default.createElement(
-                'label',
-                { htmlFor: 'sample-mode' },
-                'tickets'
-              ),
-              _react2.default.createElement(
-                'select',
-                {
-                  className: 'form-control ml-2 select-border ' + (this.props.step >= _Constants.APPLICATION_STEP.REPEAT ? 'input-highlighter-color' : ''),
-                  name: 'sample-mode',
-                  id: 'sample-mode',
-                  value: this.props.mode,
-                  onChange: this.props.OnModeChange,
-                  disabled: this.props.lock
+              'div',
+              { className: 'input-group mx-2' },
+              _react2.default.createElement('input', {
+                name: 'sample-amount',
+                type: 'text',
+                className: 'form-control underline ' + highlight,
+                id: 'input-amount',
+                placeholder: 'Amount',
+                value: this.props.amount,
+                style: {
+                  width: (this.props.amount != 0 ? Math.min(this.props.amount.toString().length * 10, 80) : 60) + 'px'
                 },
-                _react2.default.createElement(
-                  'option',
-                  { value: 'WITH' },
-                  'with replacement'
-                ),
-                _react2.default.createElement(
-                  'option',
-                  { value: 'WITHOUT' },
-                  'without replacement'
-                )
-              ),
-              '.'
-            )
-          ),
-          _react2.default.createElement(
-            'div',
-            { className: 'col-2 mr-auto' },
+                maxLength: '8',
+                onChange: this.props.OnAmountChange,
+                disabled: this.props.lock
+              })
+            ),
             _react2.default.createElement(
-              'button',
+              'label',
+              { htmlFor: 'sample-mode' },
+              'tickets'
+            ),
+            _react2.default.createElement(
+              'select',
               {
-                type: 'button',
-                className: 'btn btn-success btn-large ml-1 my-1',
-                onClick: this.handleSample,
+                className: 'form-control ml-2 select-border ' + highlight,
+                name: 'sample-mode',
+                id: 'sample-mode',
+                value: this.props.mode,
+                onChange: this.props.OnModeChange,
                 disabled: this.props.lock
               },
-              'Sample ',
-              _react2.default.createElement('i', { className: 'fa fa-hand-paper-o', 'aria-hidden': 'true' })
-            )
+              _react2.default.createElement(
+                'option',
+                { value: 'WITH' },
+                'with replacement'
+              ),
+              _react2.default.createElement(
+                'option',
+                { value: 'WITHOUT' },
+                'without replacement'
+              )
+            ),
+            '.'
+          ),
+          _react2.default.createElement(
+            'button',
+            {
+              type: 'button',
+              className: 'btn btn-success btn-large my-1',
+              onClick: this.handleSample,
+              disabled: this.props.lock
+            },
+            'Sample ',
+            _react2.default.createElement('i', { className: 'fa fa-hand-paper-o', 'aria-hidden': 'true' })
           )
         ),
         _react2.default.createElement(
@@ -40948,7 +40961,7 @@ var SampleControl = function (_Component) {
 exports.default = SampleControl;
 
 /***/ }),
-/* 81 */
+/* 82 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41092,7 +41105,7 @@ var Repeat = function (_Component) {
 exports.default = Repeat;
 
 /***/ }),
-/* 82 */
+/* 83 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41130,53 +41143,50 @@ function StatsControl(props) {
     ),
     _react2.default.createElement(
       'div',
-      { className: 'row no-gutters m-0 p-0' },
+      { className: 'control-row' },
       _react2.default.createElement(
-        'div',
-        { className: 'col-8' },
+        'form',
+        {
+          className: 'form-inline control-sentence',
+          onSubmit: function onSubmit(e) {
+            return e.preventDefault();
+          }
+        },
+        'Calculate the',
         _react2.default.createElement(
-          'form',
-          { className: 'form-inline float-right pt-1' },
-          'Calculate the',
-          _react2.default.createElement(
-            'select',
-            {
-              disabled: props.lock,
-              className: 'form-control select-border mx-2 ' + (props.step >= _Constants.APPLICATION_STEP.REPEAT ? 'input-highlighter-color' : ''),
-              onChange: function onChange(e) {
-                props.handleChangeAggregate(e.target.value);
-              }
-            },
-            _react2.default.createElement(
-              'option',
-              { value: _Constants.AGGREGATION_MODE.SUM },
-              'sum'
-            ),
-            _react2.default.createElement(
-              'option',
-              { value: _Constants.AGGREGATION_MODE.MEAN },
-              'mean'
-            )
-          ),
-          'of the tickets in the sample.'
-        )
-      ),
-      _react2.default.createElement(
-        'div',
-        { className: 'col-2' },
-        _react2.default.createElement(
-          'button',
+          'select',
           {
-            type: 'button',
-            className: 'btn btn-success btn-large mx-2 my-1',
-            disabled: props.lock || props.isSampleEmpty,
-            onClick: function onClick() {
-              props.handleAggregate(props.aggregate);
+            disabled: props.lock,
+            className: 'form-control select-border mx-2 ' + (props.step >= _Constants.APPLICATION_STEP.REPEAT ? 'input-highlighter-color' : ''),
+            onChange: function onChange(e) {
+              props.handleChangeAggregate(e.target.value);
             }
           },
-          'Aggregate ',
-          _react2.default.createElement('i', { className: 'fa fa-calculator', 'aria-hidden': 'true' })
-        )
+          _react2.default.createElement(
+            'option',
+            { value: _Constants.AGGREGATION_MODE.SUM },
+            'sum'
+          ),
+          _react2.default.createElement(
+            'option',
+            { value: _Constants.AGGREGATION_MODE.MEAN },
+            'mean'
+          )
+        ),
+        'of the tickets in the sample.'
+      ),
+      _react2.default.createElement(
+        'button',
+        {
+          type: 'button',
+          className: 'btn btn-success btn-large my-1',
+          disabled: props.lock || props.isSampleEmpty,
+          onClick: function onClick() {
+            props.handleAggregate(props.aggregate);
+          }
+        },
+        'Aggregate ',
+        _react2.default.createElement('i', { className: 'fa fa-calculator', 'aria-hidden': 'true' })
       )
     ),
     _react2.default.createElement(
@@ -41198,7 +41208,7 @@ function StatsControl(props) {
 exports.default = StatsControl;
 
 /***/ }),
-/* 83 */
+/* 84 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41348,7 +41358,7 @@ var Bar = function (_Component) {
 exports.default = Bar;
 
 /***/ }),
-/* 84 */
+/* 85 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41414,93 +41424,90 @@ var FilterControl = function (_Component) {
         ),
         _react2.default.createElement(
           "div",
-          { className: "row no-gutters m-0 p-0" },
+          { className: "control-row" },
           _react2.default.createElement(
-            "div",
-            { className: "col-8" },
+            "form",
+            {
+              className: "form-inline control-sentence",
+              onSubmit: function onSubmit(e) {
+                return e.preventDefault();
+              }
+            },
+            "Count how many are",
             _react2.default.createElement(
-              "form",
-              { className: "form-inline float-right pt-1" },
-              "Count how many are",
+              "select",
+              {
+                name: "filter-operator",
+                value: this.props.filterOperator,
+                className: "form-control select-border mx-1",
+                onChange: function onChange(e) {
+                  return _this2.props.setFilterOperator(e.target.value);
+                }
+              },
               _react2.default.createElement(
-                "select",
-                {
-                  name: "filter-operator",
-                  value: this.props.filterOperator,
-                  className: "form-control select-border mx-1",
-                  onChange: function onChange(e) {
-                    return _this2.props.setFilterOperator(e.target.value);
-                  }
-                },
-                _react2.default.createElement(
-                  "option",
-                  { value: "LT" },
-                  "<"
-                ),
-                _react2.default.createElement(
-                  "option",
-                  { value: "LE" },
-                  "\u2264"
-                ),
-                _react2.default.createElement(
-                  "option",
-                  { value: "GT" },
-                  ">"
-                ),
-                _react2.default.createElement(
-                  "option",
-                  { value: "GE" },
-                  "\u2265"
-                ),
-                _react2.default.createElement(
-                  "option",
-                  { value: "EQ" },
-                  "="
-                ),
-                _react2.default.createElement(
-                  "option",
-                  { value: "NE" },
-                  "\u2260"
-                )
+                "option",
+                { value: "LT" },
+                "<"
               ),
               _react2.default.createElement(
-                "div",
-                { className: "input-group mx-2" },
-                _react2.default.createElement("input", {
-                  name: "filter-value",
-                  type: "text",
-                  className: "form-control underline",
-                  id: "filter-value",
-                  placeholder: "value",
-                  value: this.props.filterValue,
-                  onChange: function onChange(e) {
-                    return _this2.props.setFilterValue(e.target.value);
-                  },
-                  style: {
-                    width: (this.props.filterValue != 0 ? Math.min(this.props.filterValue.toString().length * 10, 80) : 60) + "px"
-                  }
-                }),
-                "."
+                "option",
+                { value: "LE" },
+                "\u2264"
+              ),
+              _react2.default.createElement(
+                "option",
+                { value: "GT" },
+                ">"
+              ),
+              _react2.default.createElement(
+                "option",
+                { value: "GE" },
+                "\u2265"
+              ),
+              _react2.default.createElement(
+                "option",
+                { value: "EQ" },
+                "="
+              ),
+              _react2.default.createElement(
+                "option",
+                { value: "NE" },
+                "\u2260"
               )
+            ),
+            _react2.default.createElement(
+              "div",
+              { className: "input-group mx-2" },
+              _react2.default.createElement("input", {
+                name: "filter-value",
+                type: "text",
+                className: "form-control underline",
+                id: "filter-value",
+                placeholder: "value",
+                value: this.props.filterValue,
+                onChange: function onChange(e) {
+                  return _this2.props.setFilterValue(e.target.value);
+                },
+                style: {
+                  width: (this.props.filterValue != 0 ? Math.min(this.props.filterValue.toString().length * 10, 80) : 60) + "px"
+                }
+              }),
+              "."
             )
           ),
           _react2.default.createElement(
-            "div",
-            { className: "col-2" },
+            "button",
+            {
+              type: "button",
+              className: "btn btn-success btn-large my-1",
+              onClick: this.calculateCount
+            },
+            "Analyze",
+            ' ',
             _react2.default.createElement(
-              "button",
-              {
-                type: "button",
-                className: "btn btn-success btn-large mx-2 my-1",
-                onClick: this.calculateCount
-              },
-              "Analyze",
-              ' ',
-              _react2.default.createElement(
-                "span",
-                null,
-                _react2.default.createElement("i", { className: "fa fa-bar-chart", "aria-hidden": "true" })
-              )
+              "span",
+              null,
+              _react2.default.createElement("i", { className: "fa fa-bar-chart", "aria-hidden": "true" })
             )
           )
         ),
@@ -41528,7 +41535,7 @@ var FilterControl = function (_Component) {
 exports.default = FilterControl;
 
 /***/ }),
-/* 85 */
+/* 86 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -41626,7 +41633,7 @@ var _react2 = _interopRequireDefault(_react);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 86 */
+/* 87 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
